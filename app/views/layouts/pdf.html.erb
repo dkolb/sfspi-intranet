@@ -1,0 +1,38 @@
+<!doctype HTML>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
+    <%= wicked_pdf_javascript_include_tag "number_pages" %>
+    <style type="text/css">
+      td.stretch {
+        white-space: nowrap;
+      }
+      td {
+        padding: 10px;
+        margin: 0;
+      }
+      table {
+        page-break-inside:auto;
+      }
+      tr    { 
+        page-break-inside:avoid; 
+        page-break-after:auto;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      thead {
+        display:table-header-group
+      }
+      tfoot { 
+        display:table-footer-group
+      }
+    </style>
+  </head>
+  <body onload='number_pages'>
+    <div id="content">
+      <%= yield %>
+    </div>
+  </body>
+</html>

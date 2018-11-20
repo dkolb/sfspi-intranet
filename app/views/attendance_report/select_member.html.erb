@@ -1,0 +1,15 @@
+<%= form_tag(
+      controller: 'attendance_report',
+      action: 'generate',
+      method: 'post'
+    ) do %>
+  <div class="form-group">
+    <label for="member">Member to Generate Report For</label>
+    <select class="selectpicker form-control" data-live-search="true" id="member" name="member">
+<% @members.each do |m| %>
+    <option value="<%= "#{m[:record]},#{m[:name]}" %>"><%= m[:name] %></option>
+<% end %>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+<% end %>

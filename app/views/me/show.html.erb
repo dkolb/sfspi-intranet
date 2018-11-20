@@ -1,0 +1,18 @@
+<% if user_signed_in? %>
+  <table class="table">
+    <tbody>
+      <tr>
+        <th scope="row">Display Name</th>
+        <td><%= current_user.display_name %></td>
+      </tr>
+      <tr>
+        <th scope="row">Email Address</th>
+        <td><%= current_user.email %></td>
+      </tr>
+      <tr>
+        <th scope="row">Job Title</th>
+        <td><%= current_user.job_title %></td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>

@@ -3,8 +3,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.3'
 
-gem 'oauth2'
+# My gems
+gem 'omniauth-microsoft_v2_auth'
 gem 'activerecord-session_store'
+gem 'active_link_to'
+gem 'airrecord'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
@@ -50,6 +55,9 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'pry'
+  gem 'awesome_print'
+  gem 'pry-rails'
 end
 
 group :test do
