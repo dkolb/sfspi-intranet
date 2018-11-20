@@ -2,6 +2,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_user, :user_signed_in?
 
+  def is_admin?
+    current_user.roles.include? 'admin'
+  end
+
   def authenticate
     redirect_to :login unless user_signed_in?
   end

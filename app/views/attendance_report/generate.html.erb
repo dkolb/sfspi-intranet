@@ -1,12 +1,32 @@
 <h1>Attendance Report for <%= @member_name %></h1>
+<% if @gen_html %>
 <%= form_tag(
     { controller: 'attendance_report', action: 'generate_pdf'},
-    { method: 'post', target: '_blank' }
+    { method: 'post' }
   ) do %>
   <input type="hidden" name="member" value="<%= params[:member] %>">
   <button type="submit" class="btn btn-primary">Download PDF</button>
 <% end %>
+<p></p>
+<% end %>
+<h2>Attendance Stats</h2>
 <table class="table table-striped">
+  <caption>Total attendance over the past 12 month period.</caption>
+  <tbody>
+    <tr>
+      <th scope="row" class="stretch">Meetings</th>
+      <td><%= @meetings.length %></td>
+    </tr>
+    <tr>
+      <th scope="row" class="stretch">Events</th>
+      <td><%= @events.length %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Event Attendance</h2>
+<table class="table table-striped">
+  <caption>Events attended falling within the last 12 months.</caption>
   <thead>
     <tr>
       <th scope="col">Date</th>
@@ -19,12 +39,42 @@
   <tbody>
     <% @events.each do |event| %>
     <tr>
-      <td><%= event[:date] %></td>
+      <td class="stretch"><%= event[:date] %></td>
       <td><%= event[:name] %></td>
       <td><%= event[:venue] %></td>
-      <td><%= event[:point_members].nil? ? nil : event[:point_members].join(',')  %></td>
-      <td><%= event[:reporting_member] %></td>
+      <td class="stretch">
+        <% if event[:point_members].nil? %>
+          None
+        <% else %>
+          <% event[:point_members].each do |pm|  %>
+            <%= pm %><br>
+          <% end %>
+        <% end %>
+      </td>
+      <td class="stretch">
+        <% if event[:reporting_member].nil? %>
+          None
+        <% else %>
+          <%= event[:reporting_member] %>
+        <% end %>
+      </td>
     </tr>
     <% end %>
   </tbody>
 </table>
+
+<h2>GM Meeting Attendance</h2>
+<table class="table table-striped">
+  <caption>GM Meetings attended in the last 12 months</caption>
+  <thead>
+    <th scope="col">Date</th>
+  </thead>
+  <tbody>
+    <% @meetings.each do |meeting| %>
+    <tr>
+      <td><%= meeting[:date] %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+

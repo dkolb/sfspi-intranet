@@ -1,4 +1,6 @@
 <% if user_signed_in? %>
+  <%= form_tag(
+    controller: 'me', action: 'update_profile', method: 'post') do %>
   <table class="table">
     <tbody>
       <tr>
@@ -13,6 +15,31 @@
         <th scope="row">Job Title</th>
         <td><%= current_user.job_title %></td>
       </tr>
-    </tbody>
+      <tr>
+        <th scope="row">Linked Record</th>
+        <td>
+          <%= select(
+            'update_profile_form', 
+            'record_link', 
+            options_for_select(
+              @records,
+              current_user.record_link || 'No Record linked'
+            ),
+            {include_blank: 'No Record Linked'},
+            {class: 'form-control'}
+          ) %>
+          <div class="text-muted pull-right"><%= current_user.record_link %></div>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><%= button_tag "Save Changes", 
+                data: {
+                  disable_with: 'Please wait...'
+                },
+                class: 'btn btn-primary'
+            %>
+      </tbody>
   </table>
+  <% end %>
 <% end %>

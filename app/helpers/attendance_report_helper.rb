@@ -1,17 +1,15 @@
 module AttendanceReportHelper
-  def membership_list
-    MembershipBase::Members.all
-      .select { |m| m['Status'] != 'Retired' }
-      .map do |m|
-        {
-          name: m['Pseudonym'],
-          record: m.id
-        }
-      end
+  def member_record(record_id)
+    @member_record ||= {}
+    if @member_record.key? record_id
+      @member_record[record_id]
+    else
+      @member_record[record_id] = MembershipBase::Members.find(record_id)
+    end
   end
 
   def events_for_member(record_id)
-    MembershipBase::Members.find(record_id)
+    member_record(record_id)
       .events_attended
       .select { |e| e['If Last 12 Months'] = 1 }
       .sort_by { |e| DateTime.iso8601(e['Date']) }
@@ -31,6 +29,22 @@ module AttendanceReportHelper
       purpose: event['Purpose of Event'],
       point_members: point_members,
       reporting_member: reporting_member
+    }
+  end
+
+  def meetings_for_member(record_id)
+    member_record(record_id)
+      .meetings_attended
+      .select { |m| m['If Last 12 Months'] == 1 }
+      .select { |m| m['Meeting Type'] == 'GM' }
+      .sort_by { |m| DateTime.iso8601(m['Date']) }
+      .map { |m| meeting_as_hash(m) }
+  end
+
+  def meeting_as_hash(meeting)
+    {
+      date: meeting['Date'],
+      type: meeting['Type']
     }
   end
 end

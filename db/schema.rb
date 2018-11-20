@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_20_010044) do
+ActiveRecord::Schema.define(version: 2018_11_20_180727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,12 +20,6 @@ ActiveRecord::Schema.define(version: 2018_11_20_010044) do
     t.string "pseudonym"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "members", id: false, force: :cascade do |t|
-    t.string "airtable_record_id", null: false
-    t.string "path"
-    t.string "pseudonym"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -48,6 +42,8 @@ ActiveRecord::Schema.define(version: 2018_11_20_010044) do
     t.datetime "updated_at", null: false
     t.string "display_name"
     t.string "job_title"
+    t.text "roles", default: [], array: true
+    t.string "record_link"
   end
 
 end

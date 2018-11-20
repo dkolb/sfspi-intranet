@@ -18,5 +18,9 @@ module MembershipBase
     has_many :meetings_attended,
       class: 'MembershipBase::Meetings',
       column: 'Meetings Attended'
+
+    has_one :emergency_contact,
+      class: 'MembershipBase::EmergencyContacts',
+      column: 'Emergency Contact'
   end
 end

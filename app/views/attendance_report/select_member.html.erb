@@ -2,16 +2,22 @@
 <%= form_tag(
       controller: 'attendance_report',
       action: 'generate',
-      method: 'post',
-      target: '_blank'
+      method: 'post'
     ) do %>
   <div class="form-group">
-    <label for="member">Member to Generate Report For</label>
-    <select class="selectpicker form-control" data-live-search="true" id="member" name="member">
-<% @members.each do |m| %>
-    <option value="<%= "#{m[:record]},#{m[:name]}" %>"><%= m[:name] %></option>
-<% end %>
-    </select>
+    <label for="member_selection">Member to Generate Report For</label>
+    <%= select(
+          'member', 
+          'selection', 
+          options_for_select(
+            @records,
+            @selected
+          ),
+          {},
+          {
+            class: 'form-control'
+          }
+        ) %>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 <% end %>

@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   # Profile Related 
   get 'me', to: 'me#show', as: 'me'
+  get 'me/record_links', to: 'me#get_records', as: 'me_record_links'
+  post 'me/update', to: 'me#update_profile', as: 'me_update'
 
   # Reports
   get '/reports/attendance/start', 
@@ -28,4 +30,5 @@ Rails.application.routes.draw do
   get '/reports/attendance/generate_pdf',
     to: redirect('/reports/attendance/start'),
     as: 'attendance_generate_pdf_get'
+
 end
