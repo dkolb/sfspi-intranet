@@ -2,7 +2,8 @@
 <%= form_tag(
       controller: 'attendance_report',
       action: 'generate',
-      method: 'post'
+      method: 'post',
+      target: '_blank'
     ) do %>
   <div class="form-group">
     <label for="member">Member to Generate Report For</label>
