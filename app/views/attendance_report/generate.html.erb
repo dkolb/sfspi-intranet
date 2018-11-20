@@ -4,7 +4,8 @@
     { controller: 'attendance_report', action: 'generate_pdf'},
     { method: 'post' }
   ) do %>
-  <input type="hidden" name="member" value="<%= params[:member] %>">
+  <input type="hidden" name="record_id" value="<%= @record_id %>">
+  <input type="hidden" name="member_name" value="<%= @member_name %>">
   <button type="submit" class="btn btn-primary">Download PDF</button>
 <% end %>
 <p></p>

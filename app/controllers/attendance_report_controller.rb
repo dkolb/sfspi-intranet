@@ -8,16 +8,17 @@ class AttendanceReportController < ApplicationController
   end
 
   def generate
-    @member_name, record_id = params[:member][:selection].split('|')
-    @events = events_for_member(record_id)
-    @meetings = meetings_for_member(record_id)
+    @member_name, @record_id = params[:member][:selection].split('|')
+    @events = events_for_member(@record_id)
+    @meetings = meetings_for_member(@record_id)
     @gen_html = true
   end
 
   def generate_pdf
-    @member_name, record_id = params[:member].split('|')
-    @events = events_for_member(record_id)
-    @meetings = meetings_for_member(record_id)
+    @member_name = params[:member_name]
+    @record_id = params[:record_id]
+    @events = events_for_member(@record_id)
+    @meetings = meetings_for_member(@record_id)
     @gen_html = false
 
     render pdf: "#{@member_name}_attendance.pdf",
