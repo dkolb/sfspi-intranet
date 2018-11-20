@@ -25,7 +25,7 @@ class AttendanceReportController < ApplicationController
       disposition: "inline",
       template: 'attendance_report/generate.html.erb',
       layout: 'pdf.html.erb',
-      dpi: '380',
+      dpi: '200',
       page_size: 'letter',
       orientation: 'Landscape'
   end
