@@ -31,4 +31,12 @@ Rails.application.routes.draw do
     to: redirect('/reports/attendance/start'),
     as: 'attendance_generate_pdf_get'
 
+  #Administration
+  get '/admin/users',
+    to: 'admin#users',
+    as: 'admin_users_get'
+
+  post '/admin/users',
+    to: 'admin#update_users',
+    as: 'admin_users_post'
 end

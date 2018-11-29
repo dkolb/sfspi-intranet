@@ -1,10 +1,12 @@
 class AttendanceReportController < ApplicationController
-  include MeHelper
   include AttendanceReportHelper
+  include AdminHelper #for member_records
+
   before_action :authenticate
   def select_member
     @records = member_records.map { |r| [ r[0], r.join('|') ] }
     @selected = @records.find { |r| r[1] =~ /#{current_user.record_link}/ }
+    @records = [ @selected ] unless is_admin?
   end
 
   def generate

@@ -15,13 +15,6 @@ ActiveRecord::Schema.define(version: 2018_11_20_180727) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "cached_members", id: false, force: :cascade do |t|
-    t.string "airtable_id", null: false
-    t.string "pseudonym"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "sessions", force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"

@@ -1,45 +1,126 @@
+<h1>User Profile Information</h1>
 <% if user_signed_in? %>
-  <%= form_tag(
-    controller: 'me', action: 'update_profile', method: 'post') do %>
+  <h2>Office365 Info</h2>
+  <p>Please contact the Secretary to update this info.</p>
   <table class="table">
     <tbody>
       <tr>
         <th scope="row">Display Name</th>
-        <td><%= current_user.display_name %></td>
+        <td><%= @user.display_name %></td>
       </tr>
       <tr>
         <th scope="row">Email Address</th>
-        <td><%= current_user.email %></td>
+        <td><%= @user.email %></td>
       </tr>
       <tr>
         <th scope="row">Job Title</th>
-        <td><%= current_user.job_title %></td>
+        <td><%= @user.job_title %></td>
       </tr>
-      <tr>
-        <th scope="row">Linked Record</th>
-        <td>
-          <%= select(
-            'update_profile_form', 
-            'record_link', 
-            options_for_select(
-              @records,
-              current_user.record_link || 'No Record linked'
-            ),
-            {include_blank: 'No Record Linked'},
-            {class: 'form-control'}
-          ) %>
-          <div class="text-muted pull-right"><%= current_user.record_link %></div>
-        </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><%= button_tag "Save Changes", 
-                data: {
-                  disable_with: 'Please wait...'
-                },
-                class: 'btn btn-primary'
-            %>
-      </tbody>
+    </tbody>
   </table>
+<% else %>
+  <h2>Office365 Info is Missing. Please contact Secretary!</h2>
+<% end %>
+<% if @member %>
+<%= form_tag(
+  controller: 'me', 
+  action: 'update_profile',
+  method: 'post') do %>
+    <h2>Member Info</h2>
+    <table class="table">
+      <tbody>
+        <%= user_input_tag_for 'text',
+              'Full Name',
+              'full_name',
+              @member['Full Name'] %>
+        <%= user_select_tag_for 'Path',
+              'path',
+              @paths,
+              @member['Path'],
+              'No Path Selected' %>
+        <%= user_input_tag_for 'text', 
+              'Pseudonym', 
+              'pseudonym', 
+              @member['Pseudonym'] %>
+        <%= user_input_tag_for 'text',
+              'Mobile Number',
+              'mobile_number',
+              @member['Mobile Number'] %>
+        <%= user_input_tag_for 'text',
+              'E-Mail',
+              'email_address',
+              @member['E-Mail']%>
+        <%= user_input_tag_for 'text',
+              'Street Address',
+              'address',
+              @member['Street Address']
+        %>
+        <%= user_input_tag_for 'text',
+              'City',
+              'city',
+              @member['City'] %>
+        <%= user_input_tag_for 'text',
+              'State',
+              'state',
+              @member['State'] %>
+        <%= user_input_tag_for 'text',
+              'Zip',
+              'zip',
+              @member['Zip'] %>
+          <tr>
+            <td></td>
+            <td><%= button_tag "Save Changes", 
+                        data: {
+                          disable_with: 'Please wait...'
+                        },
+                        class: 'btn btn-primary'
+                %></td>
+          </tr>
+        </tbody>
+    </table>
+    <h2>Emergency Contact Info</h2>
+    <table class="table">
+      <tbody>
+        <%= contact_input_tag_for 'text',
+              'Contact Name',
+              'contact_name',
+              @emergency_contact['Contact Name'] %>
+        <%= contact_input_tag_for 'text',
+              'Address',
+              'address',
+              @emergency_contact['Address'] %>
+        <%= contact_input_tag_for 'text',
+              'City',
+              'city',
+              @emergency_contact['City'] %>
+        <%= contact_input_tag_for 'text',
+              'State',
+              'state',
+              @emergency_contact['State'] %>
+        <%= contact_input_tag_for 'text',
+              'Zip',
+              'zip',
+              @emergency_contact['Zip'] %>
+        <%= contact_input_tag_for 'text',
+              'Cell Phone',
+              'cell_phone',
+              @emergency_contact['Cell Phone'] %>
+        <%= contact_input_tag_for 'text',
+              'Relationship to Member',
+              'relationship',
+              @emergency_contact['Relationship to Member'] %>
+        <tr>
+          <td></td>
+          <td><%= button_tag "Save Changes", 
+                      data: {
+                        disable_with: 'Please wait...'
+                      },
+                      class: 'btn btn-primary'
+              %></td>
+        </tr>
+      </tbody>
+    </table>
   <% end %>
+<% else %>
+  <h2>Membership Info in Airtable Not Linked. Contact Secretary.</h2>
 <% end %>

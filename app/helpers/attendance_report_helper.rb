@@ -1,11 +1,6 @@
 module AttendanceReportHelper
   def member_record(record_id)
-    @member_record ||= {}
-    if @member_record.key? record_id
-      @member_record[record_id]
-    else
-      @member_record[record_id] = MembershipBase::Members.find(record_id)
-    end
+      MembershipBase::Members.find(record_id)
   end
 
   def events_for_member(record_id)
@@ -17,9 +12,6 @@ module AttendanceReportHelper
   end
 
   def event_as_hash(event)
-    reporting_member = event['Reporting Member'].nil? ?
-      nil : event.reporting_member['Pseudonym']
-
     point_members = event['Point Members'].nil? ?
       nil : event.point_members.map { |e| e['Pseudonym'] }
     {
@@ -28,7 +20,7 @@ module AttendanceReportHelper
       venue: event['Venue'],
       purpose: event['Purpose of Event'],
       point_members: point_members,
-      reporting_member: reporting_member
+      reporting_member: envent['Reporting Member']
     }
   end
 

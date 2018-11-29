@@ -5,7 +5,7 @@
       method: 'post'
     ) do %>
   <div class="form-group">
-    <label for="member_selection">Member to Generate Report For</label>
+    <%= label_tag "member_selection", "Member to Generate Report For" %>
     <%= select(
           'member', 
           'selection', 
