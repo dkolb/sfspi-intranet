@@ -1,0 +1,25 @@
+<div class="form-group row">
+  <div class="col-sm-2 col-form-label">
+    <%= the_label %>
+  </div>
+  <div class="col-sm-10">
+    <div class="container">
+      <% active_member_records.in_groups_of(3) do |group| %>
+        <div class="row">
+          <% group.each do |member| %>
+            <% next if member.nil? %>
+            <div class="col-md">
+              <%= label_tag "#{object_name}_#{method}_#{member.id.downcase}",
+                    class: 'form-check-label' do %>
+                <%= check_box(object_name, method, 
+                      {multiple: true, class: 'form-check-input'}, 
+                      member.id, nil) %>
+                <%= member['Pseudonym'] %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

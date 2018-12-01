@@ -17,4 +17,18 @@ module ApplicationHelper
       wrap_class: 'nav-item',
       class: 'nav-link'
   end
+
+  def dropdown_nav(name, id, active_regex, links=[])
+    nav_class = "nav-item dropdown"
+    is_active = is_active_link?(request.env['PATH_INFO'], active_regex)
+    nav_class << " active" if is_active
+
+    render partial:  'layouts/nav_dropdown',
+      locals: {
+        name: name,
+        id: id,
+        links: links,
+        nav_item_class: nav_class
+      }
+  end
 end

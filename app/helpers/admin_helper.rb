@@ -1,6 +1,6 @@
 module AdminHelper
   def member_records
-    MembershipBase::Members.all(sort: {'Pseudonym' => 'asc'})
+    MembershipBase::Member.all(sort: {'Pseudonym' => 'asc'})
       .map { |m| [ m['Pseudonym'], m.id ] }
   end
 

@@ -31,6 +31,27 @@ Rails.application.routes.draw do
     to: redirect('/reports/attendance/start'),
     as: 'attendance_generate_pdf_get'
 
+  #Events
+  get '/events/create_event',
+    to: 'events#create_start',
+    as: 'events_create_get'
+
+  post '/events/create_event',
+    to: 'events#create_do',
+    as: 'events_create_post'
+
+  get '/events/edit_event',
+    to: 'events#edit_start',
+    as: 'events_edit_get'
+
+  post '/events/edit_event/:id',
+    to: 'events#edit_by_id',
+    as: 'events_edit_by_id'
+
+  get '/events/by_date/:date',
+    to: 'events#by_date',
+    as: 'events_by_date'
+
   #Administration
   get '/admin/users',
     to: 'admin#users',

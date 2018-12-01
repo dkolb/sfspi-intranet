@@ -1,40 +1,34 @@
 class MeController < ApplicationController
   include MeHelper
+  include SharedFormHelper
   before_action :authenticate
 
   def show
     @user = current_user
     @member = member_for(@user)
-    @emergency_contact = emergency_contact_for(@member)
+    @e_contact = emergency_contact_for(@member)
     @paths = paths
   end
 
   def update_profile
     changes_saved = false
     member = member_for(current_user)
+    emergency_contact = emergency_contact_for(member)
+    params[:member][:path] = [ params[:member][:path] ]
 
-    {
-      'user' => member,
-      'emergency_contact' => emergency_contact_for(member)
-    }.each do |form_param, record|
-      next if params[form_param].nil?
-      original_param = "original_#{form_param}"
-      air_name_param = "air_name_#{form_param}"
+    member.set_from_mapped_fields(params[:member])
+    changes_saved ||= member.changed?
+    member.save
+    
+    emergency_contact.set_from_mapped_fields(params[:e_contact])
 
-      params[form_param].each do | key, new_value |
-        old_value = params[original_param][key]
-        airtable_name = params[air_name_param][key]
-
-        if old_value != new_value
-          record[airtable_name] = new_value
-        end
-      end
-
-      if !record.updated_keys.empty?
-        record.save
-        changes_saved ||= true
-      end
+    if emergency_contact.new_record?
+      emergency_contact.member = [ member.id ]
     end
+
+    changes_saved ||= emergency_contact.changed?
+
+    emergency_contact.save
 
     if changes_saved
       flash[:success] = "Updated your records!"

@@ -3,7 +3,7 @@ module MeHelper
     if user.record_link.nil?
       nil
     else
-      MembershipBase::Members.find(user.record_link)
+      MembershipBase::Member.find(user.record_link)
     end
   end
 
@@ -12,14 +12,14 @@ module MeHelper
       c = nil
     else
       c = member.emergency_contact
-      c = MembershipBase::EmergencyContacts.new({}) if c.new_record?
+      c = MembershipBase::EmergencyContact.new({}) if c.new_record?
       c['Member'] = [ member.id ]
     end
     c
   end
 
   def paths
-    MembershipBase::Paths.all
+    MembershipBase::Path.all
       .map { |p| [ p['Name'], p.id ] }
   end
 

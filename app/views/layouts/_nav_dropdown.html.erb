@@ -1,0 +1,14 @@
+<div class="<%= nav_item_class %>">
+  <a class="nav-link dropdown-toggle"
+     href="#"
+     id="<%= id %>"
+     role="button"
+     data-toggle="dropdown"
+     aria-haspopup="true"
+     aria-expanded="false"><%= name %></a>
+  <div class="dropdown-menu" aria-labeledby="<%= id %>">
+    <% links.each do |link| %>
+      <%= link_to link[:name], link[:path], class: 'dropdown-item' %>
+    <% end %>
+  </div>
+</div>

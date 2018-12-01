@@ -1,10 +1,10 @@
+<%= render 'shared/form_shims' %>
 <h1>User Profile Information</h1>
 <% if user_signed_in? %>
   <h2>Office365 Info</h2>
   <p>Please contact the Secretary to update this info.</p>
   <table class="table">
     <tbody>
-      <tr>
         <th scope="row">Display Name</th>
         <td><%= @user.display_name %></td>
       </tr>
@@ -22,104 +22,81 @@
   <h2>Office365 Info is Missing. Please contact Secretary!</h2>
 <% end %>
 <% if @member %>
-<%= form_tag(
-  controller: 'me', 
-  action: 'update_profile',
-  method: 'post') do %>
+  <%= form_tag(controller: 'me', action: 'update_profile') do %>
     <h2>Member Info</h2>
-    <table class="table">
-      <tbody>
-        <%= user_input_tag_for 'text',
-              'Full Name',
-              'full_name',
-              @member['Full Name'] %>
-        <%= user_select_tag_for 'Path',
-              'path',
-              @paths,
-              @member['Path'],
-              'No Path Selected' %>
-        <%= user_input_tag_for 'text', 
-              'Pseudonym', 
-              'pseudonym', 
-              @member['Pseudonym'] %>
-        <%= user_input_tag_for 'text',
-              'Mobile Number',
-              'mobile_number',
-              @member['Mobile Number'] %>
-        <%= user_input_tag_for 'text',
-              'E-Mail',
-              'email_address',
-              @member['E-Mail']%>
-        <%= user_input_tag_for 'text',
-              'Street Address',
-              'address',
-              @member['Street Address']
-        %>
-        <%= user_input_tag_for 'text',
-              'City',
-              'city',
-              @member['City'] %>
-        <%= user_input_tag_for 'text',
-              'State',
-              'state',
-              @member['State'] %>
-        <%= user_input_tag_for 'text',
-              'Zip',
-              'zip',
-              @member['Zip'] %>
-          <tr>
-            <td></td>
-            <td><%= button_tag "Save Changes", 
-                        data: {
-                          disable_with: 'Please wait...'
-                        },
-                        class: 'btn btn-primary'
-                %></td>
-          </tr>
-        </tbody>
-    </table>
+    <div class="container">
+        <%= form_entry(
+          label_class(:member, :full_name, 'Full Name'),
+          text_field(:member, :full_name, class: 'form-control')
+        ) %>
+        <%= form_entry(
+          label_class(:member, :path, 'Path'),
+          select(:member, :path, @paths, 
+                 {include_blank: 'No Path Selected'}, 
+                 {class: 'form-control'})
+        ) %>
+        <%= form_entry(
+          label_class(:member, :pseudonym, 'Pseudonym'),
+          text_field(:member, :pseudonym, class: 'form-control')
+        ) %>
+        <%= form_entry(
+          label_class(:member, :mobile_number, 'Mobile Number'),
+          text_field(:member, :mobile_number, class: 'form-control')
+        ) %>
+        <%= form_entry(
+          label_class(:member, :email_address, 'Email Address'),
+          email_field(:member, :email_address, class: 'form-control')
+        ) %>
+        <%= form_entry(
+          label_class(:member, :address, 'Street Address'),
+          text_field(:member, :address, class: 'form-control')
+        ) %>
+        <%= form_entry(
+          label_class(:member, :city, 'City'),
+          text_field(:member, :city, class: 'form-control')
+        ) %>
+        <%= form_entry(
+          label_class(:member, :state, 'State'),
+          text_field(:member, :state, class: 'form-control')
+        ) %>
+        <%= form_entry(
+          label_class(:member, :zip, 'Zip'),
+          text_field(:member, :zip, class: 'form-control')
+        ) %>
+      <%= submit('Save Changes') %>
+    </div>
     <h2>Emergency Contact Info</h2>
-    <table class="table">
-      <tbody>
-        <%= contact_input_tag_for 'text',
-              'Contact Name',
-              'contact_name',
-              @emergency_contact['Contact Name'] %>
-        <%= contact_input_tag_for 'text',
-              'Address',
-              'address',
-              @emergency_contact['Address'] %>
-        <%= contact_input_tag_for 'text',
-              'City',
-              'city',
-              @emergency_contact['City'] %>
-        <%= contact_input_tag_for 'text',
-              'State',
-              'state',
-              @emergency_contact['State'] %>
-        <%= contact_input_tag_for 'text',
-              'Zip',
-              'zip',
-              @emergency_contact['Zip'] %>
-        <%= contact_input_tag_for 'text',
-              'Cell Phone',
-              'cell_phone',
-              @emergency_contact['Cell Phone'] %>
-        <%= contact_input_tag_for 'text',
-              'Relationship to Member',
-              'relationship',
-              @emergency_contact['Relationship to Member'] %>
-        <tr>
-          <td></td>
-          <td><%= button_tag "Save Changes", 
-                      data: {
-                        disable_with: 'Please wait...'
-                      },
-                      class: 'btn btn-primary'
-              %></td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="container">
+      <%= form_entry(
+        label_class(:e_contact, :contact_name, 'Name'),
+        text_field(:e_contact, :contact_name, class: 'form-control')
+      ) %>
+      <%= form_entry(
+        label_class(:e_contact, :cell_phone, 'Mobile Number'),
+        text_field(:e_contact, :cell_phone, class: 'form-control')
+      ) %>
+      <%= form_entry(
+        label_class(:e_contact, :address, 'Street Address'),
+        text_field(:e_contact, :address, class: 'form-control')
+      ) %>
+      <%= form_entry(
+        label_class(:e_contact, :city, 'City'),
+        text_field(:e_contact, :city, class: 'form-control')
+      ) %>
+      <%= form_entry(
+        label_class(:e_contact, :state, 'State'),
+        text_field(:e_contact, :state, class: 'form-control')
+      ) %>
+      <%= form_entry(
+        label_class(:e_contact, :zip, 'Zip'),
+        text_field(:e_contact, :zip, class: 'form-control')
+      ) %>
+      <%= form_entry(
+        label_class(:e_contact, :relationship, 'Relationship to Member'),
+        text_field(:e_contact, :relationship, class: 'form-control')
+      ) %>
+      <%= submit('Save Changes') %>
+    </div>
   <% end %>
 <% else %>
   <h2>Membership Info in Airtable Not Linked. Contact Secretary.</h2>

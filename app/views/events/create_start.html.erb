@@ -1,0 +1,64 @@
+<%= render "shared/form_shims" %>
+<script type="application/javascript">
+  $(document).ready(function() {
+    $('#event_date').change(function() {
+      var date = encodeURIComponent($('#event_date').val());
+      var pdate = Date.parse(date);
+
+      if(isNaN(pdate) || new Date(date).getFullYear() < 2000) {
+        console.log("Illegal date.");
+      } else {
+        $.getJSON('/events/by_date/' + date, function(data, error) {
+          if(data.length > 0) {
+            var content = [
+              "<p>These events are on the same day. Please do not submit ",
+              "duplicate events.</p>"
+            ];
+            content.push('<ul>');
+            $.each(data, function(index, item) {
+              content.push('<li>' + item.name + ' at ' + item.venue + '</li>');
+            })
+            $('#same_day_events').html(content.join(""));
+          } else {
+            $('#same_day_events').html("")
+          }
+        });
+      }
+    });
+  })
+</script>
+
+<h1>Point Nun Report Form</h1>
+<div class="container">
+<%= form_tag(controller: 'events', action: 'create_do') do %>
+  <%= form_entry(
+    label_class(:event, :date, 'Date of Event'),
+    date_field(:event, :date, class: 'form-control', min: '2010-01-01')
+  ) %>
+  <div id="same_day_events">
+  </div>
+  <%= form_entry(
+    label_class(:event, :name, 'Event Name'),
+    text_field(:event, :name, class: 'form-control', autocomplete: 'none')
+  ) %>
+  <%= form_entry(
+    label_class(:event, :venue, 'Venue'),
+    text_field(:event, :venue, class: 'form-control')
+  ) %>
+  <%= form_entry(
+    label_class(:event, :purpose, 'Purpose of Event'),
+    text_field(:event, :purpose, class: 'form-control')
+  ) %>
+  <%= form_entry(
+    label_class(:event, :successes, 'Event Sucesses'),
+    text_field(:event, :successes, class: 'form-control')
+  ) %>
+  <%= form_entry(
+    label_class(:event, :challenges, 'Event Challenges'),
+    text_field(:event, :challenges, class: 'form-control')
+  ) %>
+  <%= member_checkboxes :event, :point_members, 'Point Members' %>
+  <%= member_checkboxes :event, :attendees, 'Attendees' %>
+<% end %>
+</div>
+
