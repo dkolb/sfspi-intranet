@@ -32,25 +32,33 @@ Rails.application.routes.draw do
     as: 'attendance_generate_pdf_get'
 
   #Events
-  get '/events/create_event',
-    to: 'events#create_start',
-    as: 'events_create_get'
-
-  post '/events/create_event',
-    to: 'events#create_do',
-    as: 'events_create_post'
+  get '/events/select_event',
+    to: 'events#select_event',
+    as: 'select_event'
 
   get '/events/edit_event',
-    to: 'events#edit_start',
-    as: 'events_edit_get'
+    to: 'events#edit',
+    as: 'event_new'
 
-  post '/events/edit_event/:id',
-    to: 'events#edit_by_id',
+  get '/events/edit_event/:id',
+    to: 'events#edit',
     as: 'events_edit_by_id'
 
   get '/events/by_date/:date',
     to: 'events#by_date',
     as: 'events_by_date'
+
+  get '/events/by_range/:start_date/:end_date',
+    to: 'events#by_date_range',
+    as: 'events_by_date_range'
+
+  post '/events/edit_event',
+    to: 'events#edit_do',
+    as: 'event_make_new'
+
+  post '/events/edit_event/:id',
+    to: 'events#edit_do',
+    as: 'events_update'
 
   #Administration
   get '/admin/users',

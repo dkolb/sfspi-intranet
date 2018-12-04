@@ -18,6 +18,10 @@ class ApplicationController < ActionController::Base
     redirect_to :login unless user_signed_in?
   end
 
+  def authenticate_api
+    head 403 unless user_signed_in?
+  end
+
   def current_user
     @currrent_user ||= User.find(session[:user_id]) if session[:user_id]
   end

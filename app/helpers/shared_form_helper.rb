@@ -17,11 +17,12 @@ module SharedFormHelper
     label(object_name, method, text, options)
   end
 
-  def member_checkboxes(object_name, method, the_label)
+  def member_checkboxes(object_name, method, the_label, errors)
     render partial: 'shared/member_checkboxes', locals: {
       the_label: the_label,
       object_name: object_name,
-      method: method
+      method: method,
+      errors: errors
     }
   end
 end

@@ -14,10 +14,17 @@
  *= require_self
  */
 
+
+@import 'bootstrap';
+
 body {
   padding-top: 70px;
 }
 
 td.stretch {
   white-space: nowrap;
+}
+
+.invalid-feedback.independent-feedback {
+  display: block;
 }

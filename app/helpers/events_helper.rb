@@ -6,8 +6,24 @@ module EventsHelper
 
     events.map do |e|
       {
-        name: e['Name of Event'],
-        venue: e['Venue']
+        name: e.name,
+        venue: e.venue,
+        id: events_edit_by_id_path(e.id)
+      }
+    end
+  end
+
+  def events_for_date_range(start_date, end_date)
+    events = MembershipBase::Event.all(
+      filter: "AND({Date} >= '#{start_date}', {Date} < '#{end_date}')"
+    )
+
+    events.map do |e|
+      {
+        name: e.name,
+        venue: e.venue,
+        date: e.date,
+        id: events_edit_by_id_path(e.id)
       }
     end
   end
