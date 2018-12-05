@@ -10,13 +10,17 @@
 import Rails from 'rails-ujs'
 import Turbolinks from 'turbolinks'
 import 'bootstrap/dist/js/bootstrap'
+import '../src/scss/application.scss'
+import EventPickerUi from '../src/javascript/events_ui'
+import environment from '../src/javascript/environment.js.erb'
 
 Rails.start()
 Turbolinks.start()
 
-import EventPickerUi from '../src/javascript/events_ui.js'
 window.EventPickerUi = EventPickerUi
 window.Routes = require('../src/javascript/routes.js')
 
-window.$ = $
-window.jQuery = jQuery
+if(environment === 'development') {
+  window.$ = $
+  window.jQuery = jQuery
+}
