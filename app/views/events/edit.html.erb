@@ -42,7 +42,8 @@
         <%= form_entry(
           label_class(:trash, :member, "Reporting Member"),
           text_field_tag('trash_member', 
-                         @event.reporting_member.pseudonym,
+                         @event.reporting_member_raw.nil? ?
+                          "" : @event.reporting_member.pseudonym,
                          disabled: true, 
                          class: 'form-control', 
                          autocomplete: 'none')
