@@ -17,5 +17,11 @@ module SfspiReports
     # the framework and any gems in your application.
     
     config.eager_load_paths << Rails.root.join('lib')
+
+    config.assets.enabled = false
+
+    config.generators do |g|
+      g.assets false
+    end
   end
 end

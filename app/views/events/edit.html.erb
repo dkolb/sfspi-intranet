@@ -1,5 +1,5 @@
 <%= render "shared/form_shims" %>
-<%= javascript_tag 'setupDatePickerAutoSearch();' %>
+<%= javascript_tag 'EventPickerUi.setupDatePickerAutoSearch();' %>
 <% can_edit = 
   is_admin? || current_user.record_link == @event.reporting_member_raw %>
 <h1>Point Nun Report Form</h1>

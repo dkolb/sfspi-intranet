@@ -1,5 +1,7 @@
 <%= render "shared/form_shims" %>
-<%= javascript_tag 'setupSelectEventDateSearch();' %>
+<%= javascript_tag do %>
+  EventPickerUi.setupSelectEventDateSearch(); 
+<% end %>
 <h2>Select Point Nun Report Form to Edit</h2>
 <%= form_tag do %>
   <div class="form-row align-items-center">
@@ -15,8 +17,8 @@
       <div class="input-group">
         <div class="input-group-prepend">
           <div class="input-group-text">Year</div>
-        <%= number_field_tag "event_year", nil, class: 'form-control' %>
         </div>
+        <%= number_field_tag "event_year", nil, class: 'form-control' %>
       </div>
     </div>
     <div class="col-auto my-1">
