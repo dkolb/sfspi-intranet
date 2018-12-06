@@ -3,99 +3,57 @@
 <% if user_signed_in? %>
   <h2>Office365 Info</h2>
   <p>Please contact the Secretary to update this info.</p>
-  <table class="table">
-    <tbody>
-        <th scope="row">Display Name</th>
-        <td><%= @user.display_name %></td>
-      </tr>
-      <tr>
-        <th scope="row">Email Address</th>
-        <td><%= @user.email %></td>
-      </tr>
-      <tr>
-        <th scope="row">Job Title</th>
-        <td><%= @user.job_title %></td>
-      </tr>
-    </tbody>
-  </table>
+  <%= bootstrap_form_with(
+    model: @user, 
+    url: {controller: 'me', action: 'update_profile'}, 
+    layout: :horizontal
+  ) do |f| %>
+    <%= f.static_control :display_name %>
+    <%= f.static_control :email %>
+    <%= f.static_control :job_title %>
+  <% end %>
 <% else %>
   <h2>Office365 Info is Missing. Please contact Secretary!</h2>
 <% end %>
+<div class="w-100"><hr></div>
 <% if @member %>
-  <%= form_tag(controller: 'me', action: 'update_profile') do %>
+  <%= bootstrap_form_with(
+    scope: :profile,
+    url: {controller: 'me', action: 'update_profile'},
+    layout: :horizontal
+  ) do |f| %>
     <h2>Member Info</h2>
-    <div class="container">
-        <%= form_entry(
-          label_class(:member, :full_name, 'Full Name'),
-          text_field(:member, :full_name, class: 'form-control')
-        ) %>
-        <%= form_entry(
-          label_class(:member, :path, 'Path'),
-          select(:member, :path, @paths, 
-                 {include_blank: 'No Path Selected'}, 
-                 {class: 'form-control'})
-        ) %>
-        <%= form_entry(
-          label_class(:member, :pseudonym, 'Pseudonym'),
-          text_field(:member, :pseudonym, class: 'form-control')
-        ) %>
-        <%= form_entry(
-          label_class(:member, :mobile_number, 'Mobile Number'),
-          text_field(:member, :mobile_number, class: 'form-control')
-        ) %>
-        <%= form_entry(
-          label_class(:member, :email_address, 'Email Address'),
-          email_field(:member, :email_address, class: 'form-control')
-        ) %>
-        <%= form_entry(
-          label_class(:member, :address, 'Street Address'),
-          text_field(:member, :address, class: 'form-control')
-        ) %>
-        <%= form_entry(
-          label_class(:member, :city, 'City'),
-          text_field(:member, :city, class: 'form-control')
-        ) %>
-        <%= form_entry(
-          label_class(:member, :state, 'State'),
-          text_field(:member, :state, class: 'form-control')
-        ) %>
-        <%= form_entry(
-          label_class(:member, :zip, 'Zip'),
-          text_field(:member, :zip, class: 'form-control')
-        ) %>
-      <%= submit('Save Changes') %>
+    <div class="container my-3">
+      <%= f.fields_for @member, layout: :horizontal do |fm| %>
+        <%= fm.text_field :full_name %>
+        <%= fm.select(
+          :path,
+          @paths,
+          {include_blank: 'No Path Selected'}
+        )%>
+        <%= fm.text_field :pseudonym %>
+        <%= fm.text_field :mobile_number %>
+        <%= fm.text_field :email_address %>
+        <%= fm.text_field :address, label: 'Street Address' %>
+        <%= fm.text_field :city %>
+        <%= fm.text_field :state %>
+        <%= fm.text_field :zip %>
+      <% end %>
+      <%= f.primary 'Save Changes' %>
     </div>
+    <div class="w-100"><hr></div>
     <h2>Emergency Contact Info</h2>
-    <div class="container">
-      <%= form_entry(
-        label_class(:e_contact, :contact_name, 'Name'),
-        text_field(:e_contact, :contact_name, class: 'form-control')
-      ) %>
-      <%= form_entry(
-        label_class(:e_contact, :cell_phone, 'Mobile Number'),
-        text_field(:e_contact, :cell_phone, class: 'form-control')
-      ) %>
-      <%= form_entry(
-        label_class(:e_contact, :address, 'Street Address'),
-        text_field(:e_contact, :address, class: 'form-control')
-      ) %>
-      <%= form_entry(
-        label_class(:e_contact, :city, 'City'),
-        text_field(:e_contact, :city, class: 'form-control')
-      ) %>
-      <%= form_entry(
-        label_class(:e_contact, :state, 'State'),
-        text_field(:e_contact, :state, class: 'form-control')
-      ) %>
-      <%= form_entry(
-        label_class(:e_contact, :zip, 'Zip'),
-        text_field(:e_contact, :zip, class: 'form-control')
-      ) %>
-      <%= form_entry(
-        label_class(:e_contact, :relationship, 'Relationship to Member'),
-        text_field(:e_contact, :relationship, class: 'form-control')
-      ) %>
-      <%= submit('Save Changes') %>
+    <div class="container my-3">
+      <%= f.fields_for @e_contact do |fe| %>
+        <%= fe.text_field :contact_name %>
+        <%= fe.text_field :cell_phone, label: 'Mobile Number' %>
+        <%= fe.text_field :address, label: 'Street Address' %>
+        <%= fe.text_field :city %>
+        <%= fe.text_field :state %>
+        <%= fe.text_field :zip %>
+        <%= fe.text_field :relationship, label: 'Relationship to Member' %>
+      <% end %>
+      <%= f.primary 'Save Changes' %>
     </div>
   <% end %>
 <% else %>

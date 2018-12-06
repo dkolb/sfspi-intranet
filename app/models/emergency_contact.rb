@@ -1,4 +1,6 @@
 class EmergencyContact < Airrecord::Table
+  extend ActiveModel::Naming
+
   self.base_key = ENV['AIRTABLE_APP_KEY']
   self.table_name = 'Emergency Contacts'
 

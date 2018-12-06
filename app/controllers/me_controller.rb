@@ -7,6 +7,10 @@ class MeController < ApplicationController
     @user = current_user
     @member = member_for(@user)
     @e_contact = emergency_contact_for(@member)
+    @profile = OpenStruct.new({ 
+      member: @member, 
+      e_contact: @e_contact 
+    })
     @paths = paths
   end
 
@@ -14,13 +18,13 @@ class MeController < ApplicationController
     changes_saved = false
     member = member_for(current_user)
     emergency_contact = emergency_contact_for(member)
-    params[:member][:path] = [ params[:member][:path] ]
+    params[:profile][:member][:path] = [ params[:profile][:member][:path] ]
 
-    member.set_from_mapped_fields(params[:member])
+    member.set_from_mapped_fields(params[:profile][:member])
     changes_saved ||= member.changed?
     member.save
     
-    emergency_contact.set_from_mapped_fields(params[:e_contact])
+    emergency_contact.set_from_mapped_fields(params[:profile][:emergency_contact])
 
     if emergency_contact.new_record?
       emergency_contact.member = [ member.id ]
