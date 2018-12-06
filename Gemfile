@@ -13,6 +13,7 @@ gem 'wkhtmltopdf-binary'
 gem 'browser'
 gem 'js-routes'
 gem 'webpacker'
+gem 'bootstrap_form'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
