@@ -1,6 +1,6 @@
 module AttendanceReportHelper
   def member_record(record_id)
-      MembershipBase::Member.find(record_id)
+      Member.find(record_id)
   end
 
   def events_for_member(record_id)

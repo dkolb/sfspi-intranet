@@ -1,6 +1,6 @@
 module EventsHelper
   def events_for_date(date)
-    events = MembershipBase::Event.all(
+    events = Event.all(
       filter: "{Date} = DATETIME_PARSE('#{date}')"
     )
 
@@ -14,7 +14,7 @@ module EventsHelper
   end
 
   def events_for_date_range(start_date, end_date)
-    events = MembershipBase::Event.all(
+    events = Event.all(
       filter: "AND({Date} >= '#{start_date}', {Date} < '#{end_date}')"
     )
 
@@ -29,7 +29,7 @@ module EventsHelper
   end
 
   def active_member_records
-    @active_member_records ||= MembershipBase::Member.all(
+    @active_member_records ||= Member.all(
       filter: '{Status} = "Active"',
       sort: {'Pseudonym' => 'asc'}
     )

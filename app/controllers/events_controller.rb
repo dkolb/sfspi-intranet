@@ -19,13 +19,13 @@ class EventsController < ApplicationController
   def edit
     @member = member_for(current_user)
     if params[:id].nil?
-      @event = MembershipBase::Event.new({})
+      @event = Event.new({})
     else
       begin
-        @event = MembershipBase::Event.find(params[:id])
+        @event = Event.find(params[:id])
       rescue Aireccord::Error => e
         if e.message.include? 'HTTP 404'
-          @event = MembershipBase::Event.find(params[:id])
+          @event = Event.find(params[:id])
         else
           raise e
         end
@@ -35,10 +35,10 @@ class EventsController < ApplicationController
 
   def edit_do
     if params[:id]
-      @event = MembershipBase::Event.find(params[:id])
+      @event = Event.find(params[:id])
       @event.set_from_mapped_fields(params[:event], set_empty: false)
     else
-      @event = MembershipBase::Event.new_from_mapped_fields(params[:event])
+      @event = Event.new_from_mapped_fields(params[:event])
     end
 
     if @event.valid?
