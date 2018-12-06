@@ -42,7 +42,7 @@ class Event < Airrecord::Table
 
   validates_presence_of :name, :venue
 
-  validates_presence_of :point_members, :attendees, 
+  validates_presence_of :point_members_raw, :attendees_raw, 
     message: "must select at least one"
 
   validates_format_of :date, 

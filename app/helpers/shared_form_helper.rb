@@ -25,4 +25,27 @@ module SharedFormHelper
       errors: errors
     }
   end
+
+  def collection_check_boxes_columns(
+    form_builder,
+    object_method,
+    collection,
+    value_method,
+    label_method,
+    label_text: nil,
+    columns: 3,
+    errors: []
+  )
+    label_text = object_method.to_s.titleize if label_text.nil?
+    render partial: 'shared/collection_checkboxes_columns', locals: {
+      form_builder: form_builder,
+      object_method: object_method,
+      collection: collection,
+      value_method: value_method,
+      label_method: label_method,
+      label_text: label_text,
+      columns: columns,
+      errors: errors
+    }
+  end
 end

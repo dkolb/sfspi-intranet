@@ -17,13 +17,18 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @member = member_for(current_user)
     if params[:id].nil?
-      @event = Event.new({})
+      @member = member_for(current_user)
+      @reporting_member = @member
+      @event = Event.new_from_mapped_fields({
+        reporting_member_raw: [ @member.id ]
+      })
     else
       begin
         @event = Event.find(params[:id])
-      rescue Aireccord::Error => e
+        @reporting_member = @event.reporting_member_raw.nil? ?
+          Member.empty : @event.reporting_member
+      rescue Airrecord::Error => e
         if e.message.include? 'HTTP 404'
           @event = Event.find(params[:id])
         else
@@ -41,14 +46,30 @@ class EventsController < ApplicationController
       @event = Event.new_from_mapped_fields(params[:event])
     end
 
-    if @event.valid?
-      @event.save
-      flash[:success] = "Created new event record #{@event.id}"
-      redirect_to controller: 'events', action: 'edit', id: @event.id
+    if @event.new_record?
+      @reporting_member = member_for(current_user)
     else
-      flash[:error] = @event.errors.messages.map do |field_name, message|
-        "#{field_name.to_s.titleize} #{message.join(",")}"
+      @reporting_member = @event.reporting_member || Member.empty
+    end
+
+    if @event.changed?
+      new_record = @event.new_record?
+      if @event.valid?
+        @event.save
+        if new_record
+          flash[:success] = "Created new event record #{@event.id}"
+        else
+          flash[:success] = "Saved event changes!"
+        end
+        redirect_to controller: 'events', action: 'edit', id: @event.id
+      else
+        flash[:error] = @event.errors.messages.map do |field_name, message|
+          "#{field_name.to_s.titleize} #{message.join(",")}"
+        end
+        render 'edit'
       end
+    else
+      flash[:info] = "No changes detected."
       render 'edit'
     end
   end

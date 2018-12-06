@@ -24,3 +24,7 @@ if(environment === 'development') {
   window.$ = $
   window.jQuery = jQuery
 }
+
+$(document).ready(function() {
+  $('[data-skiperror="true"]').removeClass('is-invalid')
+})

@@ -26,6 +26,10 @@ module AirrecordTableUtilities
       record.set_from_mapped_fields(fields, set_empty: set_empty)
       record
     end
+
+    def empty
+      self.new({})
+    end
   end
 
   module InstanceMethods

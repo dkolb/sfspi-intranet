@@ -12,7 +12,7 @@ module MeHelper
       c = nil
     else
       c = member.emergency_contact
-      c = EmergencyContact.new({}) if c.new_record?
+      c = EmergencyContact.empty if c.nil?
       c['Member'] = [ member.id ]
     end
     c

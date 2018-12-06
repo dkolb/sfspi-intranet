@@ -7,7 +7,7 @@ ruby '2.5.3'
 gem 'omniauth-microsoft_v2_auth'
 gem 'activerecord-session_store'
 gem 'active_link_to'
-gem 'airrecord'
+gem 'airrecord', github: 'sirupsen/airrecord'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'browser'
@@ -62,6 +62,8 @@ group :development do
   gem 'pry'
   gem 'awesome_print'
   gem 'pry-rails'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :test do

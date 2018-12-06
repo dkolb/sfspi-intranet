@@ -1,5 +1,5 @@
 <%= render 'shared/form_shims' %>
-<h1>User Profile Information</h1>
+
 <% if user_signed_in? %>
   <h2>Office365 Info</h2>
   <p>Please contact the Secretary to update this info.</p>
@@ -20,7 +20,8 @@
   <%= bootstrap_form_with(
     scope: :profile,
     url: {controller: 'me', action: 'update_profile'},
-    layout: :horizontal
+    layout: :horizontal,
+    local: true
   ) do |f| %>
     <h2>Member Info</h2>
     <div class="container my-3">

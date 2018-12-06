@@ -38,12 +38,12 @@ const EventPickerUi = {
   
   setupSelectEventDateSearch: function() {
     $(document).ready(function() {
-      setEnterKeyFor('event_month');
-      setEnterKeyFor('event_year');
+      setEnterKeyFor('select_month');
+      setEnterKeyFor('select_year');
       $('#search_button').click(function() {
         $('#search_button').prop('disabled', true).html('Working...')
-        var month = $('#event_month').val();
-        var year = $('#event_year').val();
+        var month = $('#select_month').val();
+        var year = $('#select_year').val();
         var description = $('div#same_day_events_description').html();
 
         var start = moment(year + '-' + month, 'YYYY-MM');

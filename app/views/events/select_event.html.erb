@@ -3,33 +3,15 @@
   EventPickerUi.setupSelectEventDateSearch(); 
 <% end %>
 <h2>Select Point Nun Report Form to Edit</h2>
-<%= form_tag do %>
-  <div class="form-row align-items-center">
-    <div class="col-sm-3 my-1">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <div class="input-group-text">Month</div>
-        </div>
-        <%= number_field_tag "event_month", nil, class: 'form-control', min: 1, max: 12 %>
-      </div>
-    </div>
-    <div class="col-sm-3 my-1">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <div class="input-group-text">Year</div>
-        </div>
-        <%= number_field_tag "event_year", nil, class: 'form-control' %>
-      </div>
-    </div>
-    <div class="col-auto my-1">
-      <%= button_tag 'Search', 
-        type: 'button', 
-        class: 'btn btn-primary', 
-        id: 'search_button',
-        data: {
-          disable_with: 'Searching...'
-        }
-      %>
+<%= bootstrap_form_with scope: :select, layout: :inline do |f| %>
+  <%= f.number_field :month, min: 1, max: 12, prepend: 'Month', hide_label: true %> 
+  <div class="px-1"></div>
+  <%= f.number_field :year, prepend: 'Year', hide_label: true, inline: true %>
+  <div class="px-1"></div>
+  <%= f.primary 'Search', 
+    type: 'button', 
+    id: 'search_button',
+    data: { disable_with: 'Searching...' } %>
     </div>
   </div>
 <% end %>
@@ -37,5 +19,5 @@
 <div class="d-none" id="same_day_events_description">
   <p>Please select the link below for the Point Nun Form you want to edit.</p>
 </div>
-<div id="same_day_events">
+<div id="same_day_events" class="container">
 </div>
