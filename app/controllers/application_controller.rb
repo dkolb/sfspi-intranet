@@ -2,6 +2,15 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_user, :user_signed_in?, :is_admin?
 
+  rescue_from 'Airrecord::Error' do |e|
+    if e.message.include? 'HTTP 404'
+      raise ActiveRecord::RecordNotFound.new("Could not find event.")
+    else
+      raise e
+    end
+  end
+
+
   def authorize_admin
     redirect_to :login unless user_signed_in?
     unless is_admin?

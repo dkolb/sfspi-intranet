@@ -17,7 +17,7 @@ class Event < Airrecord::Table
     class: 'Member',
     column: 'Attendees'
 
-  map_field :date, 'Date'
+  map_date_field :date, 'Date'
   map_field :name, 'Name of Event'
   map_field :venue, 'Venue'
   map_field :purpose, 'Purpose of Event'

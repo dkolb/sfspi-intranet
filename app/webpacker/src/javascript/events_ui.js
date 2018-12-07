@@ -9,9 +9,13 @@ function setEnterKeyFor(buttonId) {
 const EventPickerUi = {
   setupDatePickerAutoSearch: function() {
     $(document).ready(function() {
-      $('#event_date').change(function() {
+      $('[id^=event_date_]').change(function() {
         var description = $('div#same_day_events_description').html();
-        var date = encodeURIComponent($('#event_date').val());
+        var date = encodeURIComponent($('[id^=event_date_]').sort(function(a, b) {
+          return a.id.localeCompare(b.id)
+        }).map(function() {
+          return parseInt($(this).children('option:selected').val())
+        }).get().join('-'))
         var pdate = Date.parse(date);
 
         if(!isNaN(pdate) && new Date(date).getFullYear() > 2000) {

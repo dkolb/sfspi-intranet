@@ -24,17 +24,9 @@ class EventsController < ApplicationController
         reporting_member_raw: [ @member.id ]
       })
     else
-      begin
-        @event = Event.find(params[:id])
-        @reporting_member = @event.reporting_member_raw.nil? ?
-          Member.empty : @event.reporting_member
-      rescue Airrecord::Error => e
-        if e.message.include? 'HTTP 404'
-          @event = Event.find(params[:id])
-        else
-          raise e
-        end
-      end
+      @event = Event.find(params[:id])
+      @reporting_member = @event.reporting_member_raw.nil? ?
+        Member.empty : @event.reporting_member
     end
   end
 
@@ -45,6 +37,8 @@ class EventsController < ApplicationController
     else
       @event = Event.new_from_mapped_fields(params[:event])
     end
+
+    @event.reporting_member_raw = [ @event.reporting_member_raw ]
 
     if @event.new_record?
       @reporting_member = member_for(current_user)
@@ -71,6 +65,10 @@ class EventsController < ApplicationController
     else
       flash[:info] = "No changes detected."
       render 'edit'
+    end
+  rescue Airrecord::Error => e
+    if e.message.include? 'HTTP 404'
+      raise ActiveRecord::RecordNotFound, "Record not found."
     end
   end
 end

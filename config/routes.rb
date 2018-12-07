@@ -69,3 +69,4 @@ Rails.application.routes.draw do
     to: 'admin#update_users',
     as: 'admin_users_post'
 end
+

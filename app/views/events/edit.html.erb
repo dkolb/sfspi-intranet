@@ -1,4 +1,3 @@
-<%= render "shared/form_shims" %>
 <%= javascript_tag 'EventPickerUi.setupDatePickerAutoSearch();' %>
 <% can_edit = 
   is_admin? || current_user.record_link == @event.reporting_member_raw %>
@@ -18,14 +17,15 @@
     <% unless can_edit %>
       <fieldset disabled>
     <% end %>
-    <%= f.date_field :date,
-      value: @event.date,
-      min: '2010-01-01',
-      label: 'Date of Event',
-      class: 'datepicker' %>
-    <div class="d-none" id="same_day_events_description">
-      <p>These events are on the same day. Please do not submit duplicate events.
-        Please click the link to edit that event.</p>
+    <% if @event.new_record? %>
+      <%= f.date_select :date, order: [:month, :day, :year] %>
+    <% else %>
+      <%= f.static_control :date %>
+    <% end %>
+    <div id="same_day_events_description" class="d-none">
+      The following events are on the same date as you've selected. Please
+      click the link to view the event.  Contact the Secretary or reporiting
+      member with any discrepencies.
     </div>
     <div class="form-group row">
       <div class="col-sm-2"></div>

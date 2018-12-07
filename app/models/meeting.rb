@@ -5,7 +5,7 @@ class Meeting < Airrecord::Table
   self.table_name = 'Meetings'
 
   map_field :type, 'Meeting Type'
-  map_field :date, 'Date'
+  map_date_field :date, 'Date'
   map_field :attendees_raw, 'Attendees'
 
   has_many :attendees,
