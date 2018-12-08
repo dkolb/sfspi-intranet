@@ -66,7 +66,9 @@ module AirrecordTableUtilities
         # !(!set_empty && (new_value.nil? || new_value.empty?) => set field
         # set_empty || !(new_value.nil? || new_value.empty?)
         if set_empty || !new_value.nil? && !new_value.empty?
-          self.send("#{field_name.to_s}=", new_value)
+          if self.respond_to? field_name
+            self.send("#{field_name.to_s}=", new_value)
+          end
         end
       end
     end
