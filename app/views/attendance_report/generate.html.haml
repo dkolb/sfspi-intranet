@@ -1,0 +1,58 @@
+%h1
+  Attendance Report for #{@member_name}
+- if @gen_html
+  = form_tag(                                                     |
+      { controller: 'attendance_report', action: 'generate_pdf'}, |
+      { method: 'post' }                                          |
+    ) do                                                          |
+    %input{:name => "record_id", :type => "hidden", :value => "#{@record_id}"}/
+    %input{:name => "member_name", :type => "hidden", :value => "#{@member_name}"}/
+    %button.btn.btn-primary{:type => "submit"} Download PDF
+  %p
+%h2 Attendance Stats
+%table.table.table-striped
+  %caption Total attendance over the past 12 month period.
+  %tbody
+    %tr
+      %th.stretch{:scope => "row"} Meetings
+      %td= @meetings.length
+    %tr
+      %th.stretch{:scope => "row"} Events
+      %td= @events.length
+%h2 Event Attendance
+%table.table.table-striped
+  %caption Events attended falling within the last 12 months.
+  %thead
+    %tr
+      %th{:scope => "col"} Date
+      %th{:scope => "col"} Name
+      %th{:scope => "col"} Venue
+      %th{:scope => "col"} Point Members
+      %th{:scope => "col"} Reporting Member
+  %tbody
+    - @events.each do |event|
+      %tr
+        %td.stretch= event[:date]
+        %td= event[:name]
+        %td= event[:venue]
+        %td.stretch
+          - if event[:point_members].nil?
+            None
+          - else
+            - event[:point_members].each do |pm|
+              = pm
+              %br/
+        %td.stretch
+          - if event[:reporting_member].nil?
+            None
+          - else
+            = event[:reporting_member]
+%h2 GM Meeting Attendance
+%table.table.table-striped
+  %caption GM Meetings attended in the last 12 months
+  %thead
+    %th{:scope => "col"} Date
+  %tbody
+    - @meetings.each do |meeting|
+      %tr
+        %td= meeting[:date]

@@ -1,0 +1,15 @@
+= javascript_tag do
+  EventPickerUi.setupSelectEventDateSearch();
+%h2 Select Point Nun Report Form to Edit
+= bootstrap_form_with scope: :select, layout: :inline do |f|
+  = f.number_field :month, min: 1, max: 12, prepend: 'Month', hide_label: true
+  .px-1
+  = f.number_field :year, prepend: 'Year', hide_label: true, inline: true
+  .px-1
+  = f.primary 'Search',                    |
+    type: 'button',                        |
+    id: 'search_button',                   |
+    data: { disable_with: 'Searching...' } |
+#same_day_events_description.d-none
+  %p Please select the link below for the Point Nun Form you want to edit.
+#same_day_events.container

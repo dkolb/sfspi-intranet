@@ -1,0 +1,5 @@
+%div{:class => nav_item_class}
+  %a.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :id => id, :role => "button"}= name
+  .dropdown-menu{"aria-labeledby" => id}
+    - links.each do |link|
+      = link_to link[:name], link[:path], class: 'dropdown-item'

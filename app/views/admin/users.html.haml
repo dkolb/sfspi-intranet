@@ -1,0 +1,33 @@
+= form_tag(               |
+  controller: 'admin',    |
+  action: 'update_users', |
+  method: 'post') do      |
+  %table.table.table-striped
+    %thead
+      %tr
+        %th{:scope => "col"} Local User
+        %th{:scope => "col"} Linked Record
+        %th{:scope => "col"} Admin
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td= user.display_name
+          %td
+            = select_record_link(user, @members)
+            %br/
+            %span.text-muted
+              = user.record_link || 'No Record Linked'
+          %td
+            = check_box_tag 'role_ids[]',   |
+              'admin',                      |
+              user.roles.include?('admin'), |
+              class: 'form-control'         |
+      %tr
+        %td
+        %td
+        %td
+          = button_tag "Save Changes",       |
+            data: {                          |
+              disable_with: 'Please wait...' |
+            },                               |
+            class: 'btn btn-primary'         |

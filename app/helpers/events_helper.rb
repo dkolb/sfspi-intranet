@@ -34,4 +34,8 @@ module EventsHelper
       sort: {'Pseudonym' => 'asc'}
     )
   end
+
+  def can_edit
+    is_admin? || current_user.record_link == @event.reporting_member_raw
+  end
 end

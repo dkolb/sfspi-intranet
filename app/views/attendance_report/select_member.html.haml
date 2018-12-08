@@ -1,0 +1,21 @@
+%h1 Individual Attendance Report
+= form_tag(                          |
+    controller: 'attendance_report', |
+    action: 'generate',              |
+    method: 'post'                   |
+  ) do                               |
+  .form-group
+    = label_tag "member_selection", "Member to Generate Report For"
+    = select(                   |
+        'member',               |
+        'selection',            |
+        options_for_select(     |
+          @records,             |
+          @selected             |
+        ),                      |
+        {},                     |
+        {                       |
+          class: 'form-control' |
+        }                       |
+      )                         |
+  %button.btn.btn-primary{:type => "submit"} Submit

@@ -14,6 +14,7 @@ gem 'browser'
 gem 'js-routes'
 gem 'webpacker'
 gem 'bootstrap_form'
+gem 'haml'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
