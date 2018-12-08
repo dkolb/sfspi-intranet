@@ -38,4 +38,34 @@ class ApplicationController < ActionController::Base
   def user_signed_in?
     !!current_user
   end
+
+  DATE_PARAM_PART_REGEX = /^date\(\d+([if])\)/
+  def parse_date_parts(form_params, field_name)
+    result = form_params.each_with_object({args: [], delete: []}) do |(k, v), res| 
+      matches = /^#{field_name.to_s}\((?<index>\d+)(?<type>[if])\)/.match(k)
+      next if matches.nil?
+      index = matches[:index].to_i - 1
+
+      case matches[:type]
+      when 'i'
+        res[:args][index] = v.to_i
+      when 'f'
+        res[:args][index] = v.to_f
+      else
+        res[:args][index] = v
+      end
+
+      res[:delete] << k
+    end
+
+    result[:delete].each do |key|
+      form_params.delete key
+    end
+
+    form_params[field_name] = Date.new(*result[:args])
+  end
+
+  def clean_blanks_from_form(form_params)
+    form_params.reject! { |_, v| v == '' }
+  end
 end

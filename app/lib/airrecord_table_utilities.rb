@@ -1,5 +1,8 @@
 module AirrecordTableUtilities
   def self.included base
+    base.extend ActiveModel::Naming
+    base.include ActiveModel::AttributeAssignment
+    base.include ActiveModel::Validations
     base.extend ClassMethods
     base.include InstanceMethods
   end
@@ -47,38 +50,24 @@ module AirrecordTableUtilities
       end
     end
 
-    def new_from_mapped_fields(fields, set_empty: false)
-      record = self.new({})
-      record.set_from_mapped_fields(fields, set_empty: set_empty)
-      record
-    end
-
     def empty
       self.new({})
     end
 
+    def new_assign_attributes(attributes)
+      record = self.new({})
+      record.assign_attributes(attributes)
+      record
+    end
   end
 
   module InstanceMethods
-    def set_from_mapped_fields(fields, set_empty: false)
-      fields.each do |field_name, new_value|
-        # !set_empty && (new_value.nil? || new_value.empty?) => do nothing
-        # !(!set_empty && (new_value.nil? || new_value.empty?) => set field
-        # set_empty || !(new_value.nil? || new_value.empty?)
-        if set_empty || !new_value.nil? && !new_value.empty?
-          if self.respond_to? field_name
-            self.send("#{field_name.to_s}=", new_value)
-          end
-        end
-      end
-    end
-
     def changed?
       !updated_keys.empty?
     end
 
     def update(fields)
-      set_from_mapped_fields(fields)
+      set_attributes(fields)
       if changed?
         save
         true

@@ -20,7 +20,7 @@ class EventsController < ApplicationController
     if params[:id].nil?
       @member = member_for(current_user)
       @reporting_member = @member
-      @event = Event.new_from_mapped_fields({
+      @event = Event.new_assign_attributes({
         reporting_member_raw: [ @member.id ]
       })
     else
@@ -31,11 +31,14 @@ class EventsController < ApplicationController
   end
 
   def edit_do
+    event_params = params.permit(event: {}).to_h.fetch(:event)
+    clean_blanks_from_form(event_params)
+    parse_date_parts(event_params, :date)
     if params[:id]
       @event = Event.find(params[:id])
-      @event.set_from_mapped_fields(params[:event], set_empty: false)
+      @event.assign_attributes(event_params, set_empty: false)
     else
-      @event = Event.new_from_mapped_fields(params[:event])
+      @event = Event.new_assign_attributes(event_params)
     end
 
     @event.reporting_member_raw = [ @event.reporting_member_raw ]
