@@ -1,41 +1,13 @@
-= javascript_tag 'EventPickerUi.setupDatePickerAutoSearch();'
-%h1 Point Nun Report Form
-- unless can_edit
+- title 'Edit Point Nun Report Form'
+%h1 Edit Point Nun Report Form
+- unless can_edit?
   .invalid-feedback.independent-feedback
     You cannot edit this event as you did not submit it!
-.container
-  = bootstrap_form_with(model: @event,
-      url: {controller: 'events', action: 'edit_do', id: @event.id}, 
-      layout: :horizontal,                                           
-      local: true) do |f|                                                         
-    - unless can_edit
-      %fieldset{:disabled => "disabled"}
-    - if @event.new_record?
-      = f.date_select :date, order: [:month, :day, :year]
-    - else
-      = f.static_control :date
-    #same_day_events_description.d-none
-      The following events are on the same date as you've selected. Please
-      click the link to view the event.  Contact the Secretary or reporiting
-      member with any discrepencies.
-    .form-group.row
-      .col-sm-2
-      .col-sm-10
-        #same_day_events
-    = f.fields_for(@reporting_member) do |fm|
-      = fm.static_control :pseudonym, label: 'Reporting Member', name: ''
-    = f.hidden_field :reporting_member_raw
-    = f.text_field :name, label: 'Event Name', autocomplete: 'none'
-    = f.text_field :venue
-    = f.text_field :purpose, label: 'Purpose of Event'
-    = f.text_field :successes, label: 'Event Sucesses'
-    = f.text_field :challenges, label: 'Event Challenges'
-    = collection_check_boxes_columns f, :point_members_raw,               
-      active_member_records, :id, :pseudonym, label_text: 'Point Members'
-    = collection_check_boxes_columns f, :attendees_raw,                
-      active_member_records, :id, :pseudonym, label_text: 'Attendees', 
-      errors: @event.errors[:attendees]                                
-    = hidden_field(:event, :form_filed)
-    - if can_edit
-      = submit("Create Event")
-    - else
+#same_day_events_description.d-none
+  The following events are on the same date as you've selected. Please
+  click the link to view the event.  Contact the Secretary or reporting
+  member with any discrepencies.
+= render partial: 'events_form', locals: { submit_text: 'Save Changes',
+  allow_editing: can_edit?, 
+  url: {controller: 'events', action: 'update', id: @event.id},
+  method: :put}

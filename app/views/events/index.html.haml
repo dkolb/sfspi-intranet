@@ -1,3 +1,4 @@
+- title 'Search Point Nun Report Forms'
 = javascript_tag do
   EventPickerUi.setupSelectEventDateSearch();
 %h2 Select Point Nun Report Form to Edit
@@ -6,10 +7,10 @@
   .px-1
   = f.number_field :year, prepend: 'Year', hide_label: true, inline: true
   .px-1
-  = f.primary 'Search',                    |
-    type: 'button',                        |
-    id: 'search_button',                   |
-    data: { disable_with: 'Searching...' } |
-#same_day_events_description.d-none
+  = f.primary 'Search',                    
+    type: 'button',                        
+    id: 'search_button',                   
+    data: { disable_with: 'Searching...' } 
+#event_search_description.d-none
   %p Please select the link below for the Point Nun Form you want to edit.
-#same_day_events.container
+#event_search_results.container

@@ -1,13 +1,10 @@
-class AdminController < ApplicationController
-  include AdminHelper
-  before_action :authorize_admin
-
-  def users
+class UsersController < ApplicationController
+  def index
     @users = User.order(:display_name)
-    @members = member_records
+    @members = Member.all(sort: {'Pseudonym' => 'asc'})
   end
 
-  def update_users
+  def bulk_update
     changes = []
     user_params = params.permit(users: {}).to_h.fetch(:users)
     user_params.each do |user_id, fields|

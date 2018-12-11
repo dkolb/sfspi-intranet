@@ -1,0 +1,36 @@
+- title 'View Member Info'
+%h1 Member Detailed Information
+- if can_edit?
+  .d-flex.justify-content-end
+    = link_to 'Edit this Member', edit_member_path(@member.id)
+.w-100
+  %hr
+- if @member
+  = bootstrap_form_with scope: :profile, 
+      layout: :horizontal,
+      local: true do |f|
+    %h2 Member Info
+    .container.my-3
+      = f.fields_for @member, layout: :horizontal do |fm|
+        = fm.static_control :full_name
+        = collection_check_boxes_columns fm, :paths_raw,
+          @paths, :id, :name, label_text: 'Paths', disabled: true
+        = fm.static_control :pseudonym
+        = fm.static_control :mobile_number
+        = fm.static_control :email_address
+        = fm.static_control :address, label: 'Street Address'
+        = fm.static_control :city
+        = fm.static_control :state
+        = fm.static_control :zip
+    .w-100
+      %hr/
+    %h2 Emergency Contact Info
+    .container.my-3
+      = f.fields_for @e_contact do |fe|
+        = fe.static_control :contact_name
+        = fe.static_control :cell_phone, label: 'Mobile Number'
+        = fe.static_control :address, label: 'Street Address'
+        = fe.static_control :city
+        = fe.static_control :state
+        = fe.static_control :zip
+        = fe.static_control :relationship, label: 'Relationship to Member'

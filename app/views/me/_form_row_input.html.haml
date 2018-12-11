@@ -1,6 +1,0 @@
-%tr
-  %th{:scope => "row"}= label_text
-  %td
-    %input.form-control{:name => "#{object}[#{field_name}]", :type => type, :value => value}/
-    = hidden_field_tag "air_name_#{object}[#{field_name}]", label_text
-    = hidden_field_tag "original_#{object}[#{field_name}]", value

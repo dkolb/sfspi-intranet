@@ -31,4 +31,8 @@ module ApplicationHelper
         nav_item_class: nav_class
       }
   end
+
+  def title(page_title)
+    content_for(:title) { page_title }
+  end
 end

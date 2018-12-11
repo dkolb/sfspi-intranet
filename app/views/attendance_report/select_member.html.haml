@@ -1,21 +1,9 @@
+- title 'Generate Attendance Report'
 %h1 Individual Attendance Report
-= form_tag(                          |
-    controller: 'attendance_report', |
-    action: 'generate',              |
-    method: 'post'                   |
-  ) do                               |
-  .form-group
-    = label_tag "member_selection", "Member to Generate Report For"
-    = select(                   |
-        'member',               |
-        'selection',            |
-        options_for_select(     |
-          @records,             |
-          @selected             |
-        ),                      |
-        {},                     |
-        {                       |
-          class: 'form-control' |
-        }                       |
-      )                         |
-  %button.btn.btn-primary{:type => "submit"} Submit
+= bootstrap_form_with scope: :member, 
+  url: {controller: 'attendance_report', action: 'generate'},
+  method: :get,
+  local: true do |f|
+  = f.select :selection, options_for_select(@records, @selected),
+    label: 'Member to Generate Report For'
+  = f.primary 'Submit'

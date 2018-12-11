@@ -1,0 +1,25 @@
+- title 'View Point Nun Report Form'
+%h1 Point Nun Form
+- if can_edit?
+  .d-flex.justify-content-end
+    = link_to 'Edit this Form', edit_event_path(@event.id)
+.container
+  = bootstrap_form_with(model: @event, url: '#', layout: :horizontal) do |f|                                                         
+    = f.static_control :date
+    = f.fields_for(@reporting_member) do |fm|
+      = fm.static_control :pseudonym, label: 'Reporting Member', name: ''
+    = f.static_control :name, label: 'Event Name', autocomplete: 'none'
+    = f.static_control :venue
+    = f.static_control :purpose, label: 'Purpose of Event'
+    = f.static_control :successes, label: 'Event Sucesses'
+    = f.static_control :challenges, label: 'Event Challenges'
+    = collection_check_boxes_columns f, :point_members_raw,               
+      active_member_records, :id, :pseudonym, label_text: 'Point Members',
+      disabled: true
+    = collection_check_boxes_columns f, :attendees_raw,                
+      active_member_records, :id, :pseudonym, label_text: 'Attendees',
+      disabled: true
+    = f.form_group :form_filed, label: { text: 'Form Filed' }, 
+      help: 'If this is not checked, the form was entered retroactively by the Secretary' do
+      .container
+        = f.check_box :form_filed, hide_label: true, disabled: true

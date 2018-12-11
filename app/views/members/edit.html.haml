@@ -1,0 +1,35 @@
+- title 'Edit Member Info'
+%h1 Edit Member Information
+.w-100
+  %hr
+- if @member
+  = bootstrap_form_with scope: :profile, 
+      url: member_path(@member.id), method: :put,
+      layout: :horizontal,
+      local: true do |f|
+    %h2 Member Info
+    .container.my-3
+      = f.fields_for @member, layout: :horizontal do |fm|
+        = fm.text_field :full_name
+        = collection_check_boxes_columns fm, :paths_raw,
+          @paths, :id, :name, label_text: 'Paths'
+        = fm.text_field :pseudonym
+        = fm.text_field :mobile_number
+        = fm.text_field :email_address
+        = fm.text_field :address, label: 'Street Address'
+        = fm.text_field :city
+        = fm.text_field :state
+        = fm.text_field :zip
+    .w-100
+      %hr/
+    %h2 Emergency Contact Info
+    .container.my-3
+      = f.fields_for @e_contact do |fe|
+        = fe.text_field :contact_name
+        = fe.text_field :cell_phone, label: 'Mobile Number'
+        = fe.text_field :address, label: 'Street Address'
+        = fe.text_field :city
+        = fe.text_field :state
+        = fe.text_field :zip
+        = fe.text_field :relationship, label: 'Relationship to Member'
+    = f.primary

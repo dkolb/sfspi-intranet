@@ -1,7 +1,6 @@
 module AdminHelper
   def member_records
     Member.all(sort: {'Pseudonym' => 'asc'})
-      .map { |m| [ m['Pseudonym'], m.id ] }
   end
 
   def select_record_link(user, members)

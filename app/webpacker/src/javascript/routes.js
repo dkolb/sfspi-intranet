@@ -481,12 +481,18 @@ Based on Rails routes of SfspiReports::Application
     make: function() {
       var routes;
       routes = {
+// events => /events(.:format)
+  // function(options)
+  events_path: Utils.route([["format",false]], {}, [2,[7,"/",false],[2,[6,"events",false],[1,[2,[8,".",false],[3,"format",false]],false]]]),
 // events_by_date => /events/by_date/:date(.:format)
   // function(date, options)
   events_by_date_path: Utils.route([["date",true],["format",false]], {}, [2,[7,"/",false],[2,[6,"events",false],[2,[7,"/",false],[2,[6,"by_date",false],[2,[7,"/",false],[2,[3,"date",false],[1,[2,[8,".",false],[3,"format",false]],false]]]]]]]),
 // events_by_date_range => /events/by_range/:start_date/:end_date(.:format)
   // function(start_date, end_date, options)
-  events_by_date_range_path: Utils.route([["start_date",true],["end_date",true],["format",false]], {}, [2,[7,"/",false],[2,[6,"events",false],[2,[7,"/",false],[2,[6,"by_range",false],[2,[7,"/",false],[2,[3,"start_date",false],[2,[7,"/",false],[2,[3,"end_date",false],[1,[2,[8,".",false],[3,"format",false]],false]]]]]]]]])}
+  events_by_date_range_path: Utils.route([["start_date",true],["end_date",true],["format",false]], {}, [2,[7,"/",false],[2,[6,"events",false],[2,[7,"/",false],[2,[6,"by_range",false],[2,[7,"/",false],[2,[3,"start_date",false],[2,[7,"/",false],[2,[3,"end_date",false],[1,[2,[8,".",false],[3,"format",false]],false]]]]]]]]]),
+// members => /members(.:format)
+  // function(options)
+  members_path: Utils.route([["format",false]], {}, [2,[7,"/",false],[2,[6,"members",false],[1,[2,[8,".",false],[3,"format",false]],false]]])}
 ;
       routes.configure = function(config) {
         return Utils.configure(config);

@@ -25,9 +25,17 @@ module SharedFormHelper
     label_method,
     label_text: nil,
     columns: 3,
-    errors: []
+    errors: nil,
+    disabled: false
   )
+
     label_text = object_method.to_s.titleize if label_text.nil?
+    if errors.nil? && !form_builder.object.errors.nil?
+      errors = form_builder.object.errors[object_method]
+    else
+      erorrs = []
+    end
+
     render partial: 'shared/collection_checkboxes_columns', locals: {
       form_builder: form_builder,
       object_method: object_method,
@@ -36,7 +44,8 @@ module SharedFormHelper
       label_method: label_method,
       label_text: label_text,
       columns: columns,
-      errors: errors
+      errors: errors,
+      disabled: disabled
     }
   end
 end

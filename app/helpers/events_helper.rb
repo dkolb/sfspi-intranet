@@ -8,7 +8,7 @@ module EventsHelper
       {
         name: e.name,
         venue: e.venue,
-        id: events_edit_by_id_path(e.id)
+        href: event_path(e.id)
       }
     end
   end
@@ -23,7 +23,7 @@ module EventsHelper
         name: e.name,
         venue: e.venue,
         date: e.date,
-        id: events_edit_by_id_path(e.id)
+        href: event_path(e.id)
       }
     end
   end
@@ -35,7 +35,7 @@ module EventsHelper
     )
   end
 
-  def can_edit
+  def can_edit?
     is_admin? || current_user.record_link == @event.reporting_member_raw
   end
 end

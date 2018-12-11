@@ -1,0 +1,27 @@
+.container
+  = bootstrap_form_with model: @event,
+    url: url,
+    method: local_assigns.fetch(:method, :post),
+    layout: :horizontal,
+    local: true  do |f|
+    - unless allow_editing
+      %fieldset{:disabled => "disabled"}
+    = f.date_select :date, order: [:month, :day, :year]
+    .form-group.row
+      .col-sm-2
+      .col-sm-10
+        #same_day_events
+    = f.fields_for(@reporting_member) do |fm|
+      = fm.static_control :pseudonym, label: 'Reporting Member', name: ''
+    = f.hidden_field :reporting_member_raw
+    = f.text_field :name, label: 'Event Name', autocomplete: 'none'
+    = f.text_field :venue
+    = f.text_area :purpose, label: 'Purpose of Event', rows: 3
+    = f.text_area :successes, label: 'Event Sucesses', rows: 3
+    = f.text_area :challenges, label: 'Event Challenges', rows: 3
+    = collection_check_boxes_columns f, :point_members_raw,               
+      active_member_records, :id, :pseudonym, label_text: 'Point Members'
+    = collection_check_boxes_columns f, :attendees_raw,                
+      active_member_records, :id, :pseudonym, label_text: 'Attendees' 
+    = f.hidden_field(:form_filed)
+    = submit(submit_text) unless submit_text.nil?

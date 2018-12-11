@@ -1,13 +1,13 @@
 module AttendanceReportHelper
   def member_record(record_id)
-      Member.find(record_id)
+      @member_record ||= Member.find(record_id)
   end
 
   def events_for_member(record_id)
     member_record(record_id)
       .events_attended
       .select { |e| e.last_12_months? }
-      .sort_by { |e| DateTime.iso8601(e.date) }
+      .sort_by { |e| e.date }
       .map { |e| event_as_hash(e) }
   end
 
@@ -31,7 +31,7 @@ module AttendanceReportHelper
       .meetings_attended
       .select { |m| m.last_12_months? }
       .select { |m| m.type == 'GM' }
-      .sort_by { |m| DateTime.iso8601(m.date) }
+      .sort_by { |m| m.date }
       .map { |m| meeting_as_hash(m) }
   end
 

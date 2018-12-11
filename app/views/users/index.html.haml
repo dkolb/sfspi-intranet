@@ -1,6 +1,6 @@
-- title 'User Admin'
+- title 'User Administration'
 = form_with(scope: :users,
-  url: {controller: 'admin', action: 'update_users'},
+  url: {controller: 'users', action: 'bulk_update'},
   method: 'post', local: true) do |f|
   %table.table.table-striped
     %thead

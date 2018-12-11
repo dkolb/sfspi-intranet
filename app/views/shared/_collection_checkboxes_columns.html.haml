@@ -1,20 +1,16 @@
 - label_content = capture do
   = label_text
   .invalid-feedback.independent-feedback
-    = form_builder.object.errors[object_method].join(', ')
-= form_builder.form_group object_method, |
-  label: {text: label_content} do        |
+    = errors.join(', ')
+= form_builder.form_group object_method, label: {text: label_content} do        
   .container.has-errors
     - collection.in_groups_of(columns) do |group|
       .row
         - group.each do |item|
           - next if item.nil?
           .col-md
-            = form_builder.check_box object_method, |
-              {                                     |
-                label: item.send(label_method),     |
-                multiple: true,                     |
-                "data-skiperror": true              |
-              },                                    |
-              item.send(value_method),              |
-              nil                                   |
+            = form_builder.check_box object_method, 
+              {label: item.send(label_method), multiple: true, 
+                "data-skiperror": true, disabled: disabled},
+              item.send(value_method),
+              nil                    
