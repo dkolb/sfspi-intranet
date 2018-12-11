@@ -11,7 +11,7 @@ import Rails from 'rails-ujs'
 import Turbolinks from 'turbolinks'
 import 'bootstrap/dist/js/bootstrap'
 import '../src/scss/application.scss'
-import EventPickerUi from '../src/javascript/event_picker_ui'
+import SfspiUi from '../src/javascript/sfspi_ui'
 import environment from '../src/javascript/environment.js.erb'
 import 'datatables.net-bs4'
 import fixDataTables from '../src/javascript/fix_datatables.js'
@@ -20,7 +20,7 @@ Rails.start()
 Turbolinks.start()
 
 window.Routes = require('../src/javascript/routes.js')
-window.EventPickerUi = EventPickerUi
+window.SfspiUi = SfspiUi
 window.fixDataTables = fixDataTables
 
 if(environment === 'development') {

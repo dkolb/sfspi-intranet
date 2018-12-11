@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   resources :members, except: :destroy
   resources :events, except: :destroy
   resources :users, only: :index
+  resources :meetings, except: :destroy
+
   post '/users/bulk_update',
     to: 'users#bulk_update'
 
@@ -31,6 +33,11 @@ Rails.application.routes.draw do
   get '/reports/attendance/generate_pdf',
     to: redirect('/reports/attendance/start'),
     as: 'attendance_generate_pdf_get'
+
+  #Meetings
+  get '/meetings/by_range/:start_date/:end_date',
+    to: 'meetings#by_date_range',
+    as: 'meetings_by_date_range'
 
   #Events
   get '/events/by_date/:date',

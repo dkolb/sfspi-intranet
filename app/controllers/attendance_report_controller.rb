@@ -29,6 +29,8 @@ class AttendanceReportController < ApplicationController
       layout: 'pdf',
       dpi: '200',
       page_size: 'letter',
-      orientation: 'Landscape'
+      orientation: 'Landscape',
+      disable_internal_links: true,
+      disable_external_links: true
   end
 end

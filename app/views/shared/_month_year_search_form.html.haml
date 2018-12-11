@@ -1,0 +1,13 @@
+= bootstrap_form_with scope: :select, layout: :inline do |f|
+  = f.number_field :month, min: 1, max: 12, prepend: 'Month', hide_label: true,
+    value: Date.today.month
+  .px-1
+  = f.number_field :year, prepend: 'Year', hide_label: true, inline: true,
+    value: Date.today.year
+  .px-1
+  = f.primary 'Search',
+    type: 'button',
+    id: 'search_button',
+    data: { disable_with: 'Searching...' }
+#search_description.d-none= content_for?(:desc) ? yield(:desc) : ''
+#search_results.container

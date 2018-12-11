@@ -4,10 +4,10 @@
 - if @gen_html
   = bootstrap_form_with url: { controller: 'attendance_report', 
     action: 'generate_pdf'}, method: 'post', local: true,
-    target: :_blank do |f|
+    html: {target: :_blank} do |f|
     = f.hidden_field :record_id, value: @record_id
     = f.hidden_field :member_name, value: @member_name
-    = f.primary 'Download PDF'
+    = f.primary 'Download PDF', disable: false
   %p
 %h2 Attendance Stats
 %table.table.table-striped
@@ -33,7 +33,7 @@
     - @events.each do |event|
       %tr
         %td.stretch= event[:date]
-        %td= event[:name]
+        %td= link_to event[:name], event[:href]
         %td= event[:venue]
         %td.stretch
           - if event[:point_members].nil?
@@ -55,4 +55,4 @@
   %tbody
     - @meetings.each do |meeting|
       %tr
-        %td= meeting[:date]
+        %td= link_to meeting[:date], meeting[:href]

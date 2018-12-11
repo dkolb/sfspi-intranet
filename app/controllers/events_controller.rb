@@ -1,6 +1,5 @@
 class EventsController < ApplicationController
   include EventsHelper
-  include MembersHelper
   include SharedFormHelper
   before_action :authenticate, only: [ :select_event, :edit, :edit_do ]
   before_action :authenticate_api, only: [ :by_date, :by_date_range ]
@@ -82,7 +81,7 @@ class EventsController < ApplicationController
     if @event.valid?
       @event.save
       flash[:success] = "Point Nun Form created!"
-      redirect_to controller: 'events', action: 'edit', id: @event.id
+      redirect_to action: :edit, id: @event.id
     else
       flash[:error] = @event.errors.messages.map do |field_name, message|
         "#{field_name.to_s.titleize} #{message.join(",")}"

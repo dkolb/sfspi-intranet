@@ -4,8 +4,6 @@
     method: local_assigns.fetch(:method, :post),
     layout: :horizontal,
     local: true  do |f|
-    - unless allow_editing
-      %fieldset{:disabled => "disabled"}
     = f.date_select :date, order: [:month, :day, :year]
     .form-group.row
       .col-sm-2
@@ -24,4 +22,4 @@
     = collection_check_boxes_columns f, :attendees_raw,                
       active_member_records, :id, :pseudonym, label_text: 'Attendees' 
     = f.hidden_field(:form_filed)
-    = submit(submit_text) unless submit_text.nil?
+    = f.primary submit_text unless submit_text.nil?

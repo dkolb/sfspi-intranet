@@ -28,11 +28,13 @@
           = dropdown_nav "Events", "eventDropdown", /^\/events/,
             [ { name: 'Point Nun Report Form', path: new_event_path }, 
               { name: 'Look Up Old Point Nun Form', path: events_path } ]                                                          
+          = dropdown_nav "Meetings", "meetingsDropdown", /^\/meetings/,
+            meetings_dropdown_links
           = nav_link_to "Members", members_path, :inclusive
           - if is_admin?
             = dropdown_nav 'Administration', 'adminDropdown', /^\/admin/, 
               [ { name: 'Manage User Roles and Record Links', 
-              path: users_path } ]                                                           
+              path: users_path } ]
         - if user_signed_in?
           .navbar-nav
             = dropdown_nav current_user.display_name, 'profileDropdown', 

@@ -6,12 +6,6 @@ module SharedFormHelper
     }
   end
 
-  def submit(text)
-    render partial: 'shared/form_submit', locals: {
-      text: text
-    }
-  end
-
   def label_class(object_name, method, text = nil, options = {})
     options[:class] = 'col-sm-2 col-form-label'
     label(object_name, method, text, options)

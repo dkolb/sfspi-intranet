@@ -1,0 +1,13 @@
+%h1 Meeting Information
+- if can_edit?
+  .d-flex.justify-content-end
+    = link_to 'Edit this Meeting', edit_meeting_path(@meeting.id)
+.container
+  = bootstrap_form_with model: @meeting,
+    url: '#',
+    layout: :horizontal do |f|
+
+    = f.static_control :date
+    = f.static_control :verbose_type, label: 'Type of Meeting'
+    = collection_check_boxes_columns f, :attendees_raw,
+      member_records, :id, :pseudonym, label_text: 'Attendees', disabled: true

@@ -1,12 +1,4 @@
 module MembersHelper
-  def member_for(user)
-    if user.record_link.nil?
-      nil
-    else
-      Member.find(user.record_link)
-    end
-  end
-
   def emergency_contact_for(member)
     if member.nil?
       c = nil

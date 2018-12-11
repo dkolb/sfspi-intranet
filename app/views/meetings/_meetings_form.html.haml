@@ -1,0 +1,12 @@
+.container
+  = bootstrap_form_with model: @meeting,
+    url: url,
+    method: local_assigns.fetch(:method, :post),
+    layout: :horizontal,
+    local: true do |f|
+
+    = f.date_select :date
+    = f.select :verbose_type, @meeting.allowed_verbose_types, label: 'Type of Meeting'
+    = collection_check_boxes_columns f, :attendees_raw,
+      member_records, :id, :pseudonym, label_text: 'Attendees'
+    = f.primary submit_text unless submit_text.nil?

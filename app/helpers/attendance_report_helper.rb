@@ -22,7 +22,8 @@ module AttendanceReportHelper
       venue: event.venue,
       purpose: event.purpose,
       point_members: point_members,
-      reporting_member: reporting_member
+      reporting_member: reporting_member,
+      href: event_path(event.id)
     }
   end
 
@@ -38,7 +39,8 @@ module AttendanceReportHelper
   def meeting_as_hash(meeting)
     {
       date: meeting.date,
-      type: meeting.type
+      type: meeting.type,
+      href: meeting_path(meeting.id)
     }
   end
 end

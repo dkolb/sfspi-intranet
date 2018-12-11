@@ -1,16 +1,10 @@
 - title 'Search Point Nun Report Forms'
-= javascript_tag do
-  EventPickerUi.setupSelectEventDateSearch();
-%h2 Select Point Nun Report Form to Edit
-= bootstrap_form_with scope: :select, layout: :inline do |f|
-  = f.number_field :month, min: 1, max: 12, prepend: 'Month', hide_label: true
-  .px-1
-  = f.number_field :year, prepend: 'Year', hide_label: true, inline: true
-  .px-1
-  = f.primary 'Search',                    
-    type: 'button',                        
-    id: 'search_button',                   
-    data: { disable_with: 'Searching...' } 
-#event_search_description.d-none
-  %p Please select the link below for the Point Nun Form you want to edit.
-#event_search_results.container
+%h2 Select Point Nun Report Form to View
+- content_for(:desc) do
+  %p Please select the link below for the Point Nun Form you want to view.
+= render 'shared/month_year_search_form'
+:javascript
+  SfspiUi.setupDateSearchForm(
+    Routes.events_by_date_range_path, 
+    SfspiUi.eventsTranslator
+  )

@@ -35,4 +35,11 @@ module ApplicationHelper
   def title(page_title)
     content_for(:title) { page_title }
   end
+
+  def meetings_dropdown_links
+    links = [ { name: 'Search Meetings', path: meetings_path } ]
+    if is_secretary? || is_admin?
+      links << { name: 'Create New Meeting', path: new_meeting_path }
+    end
+  end
 end

@@ -1,0 +1,10 @@
+- title 'Search Meetings'
+%h2 Select Meeting to View
+- content_for(:desc) do
+  %p Please select the link below for the meeting you wish to view.
+= render 'shared/month_year_search_form'
+:javascript
+  SfspiUi.setupDateSearchForm(
+    Routes.meetings_by_date_range_path,
+    SfspiUi.meetingsTranslator
+  )

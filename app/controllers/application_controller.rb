@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
 
   protect_from_forgery with: :exception
-  helper_method :current_user, :user_signed_in?, :is_admin?
+  helper_method :current_user, :user_signed_in?, :is_admin?, :is_secretary?
 
   rescue_from 'Airrecord::Error' do |e|
     if e.message.include? 'HTTP 404'
@@ -21,8 +21,28 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def authorize_secretary
+    redirect_to :login unless user_signed_in?
+    unless is_secretary? || is_admin?
+      flash[:error] = 'You do not have permission to do that!'
+      redirect_to root_path
+    end
+  end
+
   def is_admin?
     user_signed_in? && current_user.roles.include?('admin')
+  end
+
+  def is_secretary?
+    user_signed_in? && current_user.roles.include?('secretary')
+  end
+
+  def member_for(user)
+    if user.record_link.nil?
+      nil
+    else
+      Member.find(user.record_link)
+    end
   end
 
   def authenticate
