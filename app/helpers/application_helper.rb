@@ -44,4 +44,13 @@ module ApplicationHelper
 
     links
   end
+
+  def user_dropdown_links
+    links = [ { name: 'Logout', path: logout_path } ]
+    if current_user.record_link
+      links << [
+        { name: 'Profile', path: edit_member_path(current_user.record_link) }
+      ]
+    end
+  end
 end

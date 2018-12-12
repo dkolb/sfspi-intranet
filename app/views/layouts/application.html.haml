@@ -38,10 +38,7 @@
                 path: users_path } ]
           .navbar-nav
             = dropdown_nav current_user.display_name, 'profileDropdown', 
-              /^\/me/, 
-              [ { name: 'Logout', path: logout_path },                            
-                { name: 'Profile', 
-                  path: edit_member_path(current_user.record_link) } ]
+              /^\/me/, user_dropdown_links
         - else
           .navbar-nav.mr-auto
           .navbar-nav
