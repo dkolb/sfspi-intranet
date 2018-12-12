@@ -61,17 +61,33 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  response = RestClient.get "https://mailtrap.io/api/v1/inboxes.json?api_token=#{ENV['MAILTRAP_API_TOKEN']}"
+  if ENV['MAILTRAP_API_TOKEN']
+    response = RestClient.get(
+      "https://mailtrap.io/api/v1/inboxes.json"\
+      "?api_token=#{ENV['MAILTRAP_API_TOKEN']}"
+    )
 
-  first_inbox = JSON.parse(response)[0] # get first inbox
+    first_inbox = JSON.parse(response)[0] # get first inbox
 
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :user_name => first_inbox['username'],
-    :password => first_inbox['password'],
-    :address => first_inbox['domain'],
-    :domain => first_inbox['domain'],
-    :port => first_inbox['smtp_ports'][0],
-    :authentication => :plain
-  }
+    if ENV['HEROKU_APP_NAME'].nil?
+      default_host = 'localhost:3000'
+    else
+      default_host = "#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
+    end
+
+    config.action_mailer.delivery_method = :smtp
+
+    config.action_mailer.default_url_options = {
+      host: default_host
+    }
+
+    config.action_mailer.smtp_settings = {
+      :user_name => first_inbox['username'],
+      :password => first_inbox['password'],
+      :address => first_inbox['domain'],
+      :domain => first_inbox['domain'],
+      :port => first_inbox['smtp_ports'][0],
+      :authentication => :plain
+    }
+  end
 end

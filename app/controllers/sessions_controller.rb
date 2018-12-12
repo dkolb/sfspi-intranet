@@ -11,7 +11,15 @@ class SessionsController < ApplicationController
       redirect_to root_path
       session[:user_id] = nil
     else
-      @user = User.find_or_create_from_auth_hash(auth)
+      @user = User.find_from_auth_hash(auth)
+
+      if @user.nil?
+        @user = User.create_from_auth_hash(auth)
+        UserMailer.with(user: @user).new_user_email.deliver_later
+      else
+        @user.update_from_auth_hash(auth)
+      end
+
       session[:user_id] = @user.id
       redirect_to request.env['omniauth.origin'] || root_path
     end

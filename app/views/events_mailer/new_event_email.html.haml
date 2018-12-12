@@ -1,0 +1,29 @@
+%h1 New Point Nun Report Form Filed
+%table
+  %tbody
+    - ['date', 'name', 'venue', 'purpose', 'successes', 'challenges'].each do |f|
+      %tr
+        %th{scope: 'row'}= @event.class.human_attribute_name(f)
+        %td= @event.send(f)
+    %tr
+      %th{scope: 'row'} Attendees
+      %td
+        - @event.attendees.map(&:pseudonym).each do |a|
+          %p= a
+    %tr
+      %th{scope: 'row'} Point Member
+      %td
+        - @event.point_members.map(&:pseudonym).each do |p|
+          %p= p
+    %tr
+      %th{scope: 'row'} Reporting Member
+      %td
+        - if @event.reporting_member.nil?
+          No Reporting Member
+        - else
+          = @event.reporting_member.pseudonym
+
+%p
+  You may view this event 
+  = link_to 'on the SFSPI Management Site', 
+    url_for(controller: 'events', action: 'show', id: @event_id)

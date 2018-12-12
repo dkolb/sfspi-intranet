@@ -1,0 +1,9 @@
+New User Created
+================
+
+A new user has been created.
+<% ['first_name','last_name','email','display_name','job_title'].each do |f| -%>
+  <%= @user.class.human_attribute_name(f) %>: <%= @user[f] %>
+<% end %>
+Please set up their record link 
+<%= url_for(controller: 'users', action: 'index') -%>

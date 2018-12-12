@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     user_params = params.permit(users: {}).to_h.fetch(:users)
     user_params.each do |user_id, fields|
       fields[:roles].reject! { |v| v.nil? || v.empty? }
+      fields.reject! { |_k, v| v.nil? || v.empty? }
       u = User.find(user_id)
       u.attributes = fields
       if u.changed?

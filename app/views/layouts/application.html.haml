@@ -56,7 +56,7 @@
         - else
           = value
     .container.main-container.pt-2
-      - unless current_user.record_link
+      - if user_signed_in? && current_user.record_link.nil?
         .text-white.bg-danger 
           Please contact the Secretary to finish setting up your user account
       = yield
