@@ -23,15 +23,17 @@
         "data-toggle" => "collapse", :type => "button"}
         %span.navbar-toggler-icon
       #navbarSupportedContent.collapse.navbar-collapse
-        - if user_signed_in? && current_user.record_link
+        - if user_signed_in?
           %ul.navbar-nav.mr-auto
-            = nav_link_to "Attendance Report", attendance_start_path, :inclusive
-            = dropdown_nav "Events", "eventDropdown", /^\/events/,
-              [ { name: 'Point Nun Report Form', path: new_event_path }, 
-                { name: 'Look Up Old Point Nun Form', path: events_path } ]                                                          
-            = dropdown_nav "Meetings", "meetingsDropdown", /^\/meetings/,
-              meetings_dropdown_links
-            = nav_link_to "Members", members_path, :inclusive
+            - if current_user.record_link
+              = nav_link_to "Attendance Report", attendance_start_path, 
+                :inclusive
+              = dropdown_nav "Events", "eventDropdown", /^\/events/,
+                [ { name: 'Point Nun Report Form', path: new_event_path }, 
+                  { name: 'Look Up Old Point Nun Form', path: events_path } ]                                                          
+              = dropdown_nav "Meetings", "meetingsDropdown", /^\/meetings/,
+                meetings_dropdown_links
+              = nav_link_to "Members", members_path, :inclusive
             - if is_admin?
               = dropdown_nav 'Administration', 'adminDropdown', /^\/admin/, 
                 [ { name: 'Manage User Roles and Record Links', 
@@ -55,6 +57,6 @@
           = value
     .container.main-container.pt-2
       - unless current_user.record_link
-        .text-light.bg-danger 
+        .text-white.bg-danger 
           Please contact the Secretary to finish setting up your user account
       = yield
