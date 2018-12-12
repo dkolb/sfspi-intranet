@@ -23,7 +23,7 @@
         "data-toggle" => "collapse", :type => "button"}
         %span.navbar-toggler-icon
       #navbarSupportedContent.collapse.navbar-collapse
-        - if user_signed_in?
+        - if user_signed_in? && current_user.record_link
           %ul.navbar-nav.mr-auto
             = nav_link_to "Attendance Report", attendance_start_path, :inclusive
             = dropdown_nav "Events", "eventDropdown", /^\/events/,
@@ -54,4 +54,7 @@
         - else
           = value
     .container.main-container.pt-2
+      - unless current_user.record_link
+        .text-light.bg-danger 
+          Please contact the Secretary to finish setting up your user account
       = yield
