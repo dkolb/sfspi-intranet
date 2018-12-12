@@ -41,5 +41,7 @@ module ApplicationHelper
     if is_secretary? || is_admin?
       links << { name: 'Create New Meeting', path: new_meeting_path }
     end
+
+    links
   end
 end
