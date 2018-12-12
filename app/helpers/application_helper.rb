@@ -52,5 +52,7 @@ module ApplicationHelper
         { name: 'Profile', path: edit_member_path(current_user.record_link) }
       ]
     end
+
+    links
   end
 end
