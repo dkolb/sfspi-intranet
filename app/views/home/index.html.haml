@@ -1,8 +1,12 @@
 - title 'Home'
 .jumbotron
-  %h1 SFSPI Attendance Reports
+  .container
+    .row.align-items-center.h-100
+      .col-md-2
+        %img.img-fluid{src: asset_pack_path('images/logo.png')}
+      .col-md-10
+        %h1 SFSPI Attendance Reports
 %p
-  - if user_signed_in?
-    Please select a report from the navigation bar to run.
-  - else
-    Please click the login button to login with your Office365 account.
+  - unless user_signed_in?
+    %p Please click the login button to login with your Office365 account.
+

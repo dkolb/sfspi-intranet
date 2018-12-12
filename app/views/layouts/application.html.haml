@@ -14,7 +14,7 @@
     = stylesheet_pack_tag 'application', media: 'all', 
       'data-turbolinks-track': 'reload'
   %body
-    %nav.navbar.navbar-expand-lg.navbar-dark.dark.bg-dark
+    %nav.navbar.navbar-expand-lg.navbar-light.light.bg-light
       %a.navbar-brand{:href => "/"} SFSPI Management System
       %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", 
         "aria-expanded" => "false", 
@@ -56,5 +56,5 @@
               %li= message
         - else
           = value
-    .container.main-container
+    .container.main-container.pt-2
       = yield

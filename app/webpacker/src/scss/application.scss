@@ -1,3 +1,23 @@
+// Themeing map
+$blue-munsell: hsla(191%, 95%, 34%, 1);
+$pumpkin: hsla(27%, 98%, 54%, 1);
+$charcoal: hsla(214%, 31%, 26%, 1);
+$android-green: hsla(81%, 49%, 53%, 1);
+$charleston-green: hsla(330%, 2%, 18%, 1);
+$ucla-gold: rgba(255, 174, 0, 1);
+$candy-apple-red: rgba(253, 5, 0, 1);
+$usc-gold: rgba(254, 205, 0, 1);
+$minion-yellow: rgba(249, 212, 80, 1);
+
+$theme-colors: (
+  "primary": $ucla-gold,
+  "secondary": $candy-apple-red,
+  "dark": $charleston-green,
+  "light": $pumpkin,
+);
+
+$jumbotron-bg: $ucla-gold;
+
 @import '~bootstrap/scss/bootstrap';
 $fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
@@ -14,4 +34,3 @@ td.stretch {
 .invalid-feedback.independent-feedback {
   display: block;
 }
-
