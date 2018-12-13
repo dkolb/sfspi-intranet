@@ -1,5 +1,5 @@
 class EventsMailer < ApplicationMailer
-  default to: 'active@southfloridasisters.org'
+  default to: ENV['EVENT_CREATED_EMAIL']
 
   def new_event_email
     @event_id = params[:event].delete 'id'
