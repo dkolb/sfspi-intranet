@@ -1,2 +1,6 @@
-import './favicon.ico'
-import './logo.png'
+import './logo-320w.png'
+import './logo-150w.png'
+import './logo-80w.png'
+import './logo-60w.png'
+import './logo-40w.png'
+import './logo-20w.png'

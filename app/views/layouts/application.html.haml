@@ -8,14 +8,19 @@
     = csp_meta_tag
     %meta{:content => "width=device-width, initial-scale=1, shrink-to-fit=no", 
       :name => "viewport"}
-    = favicon_link_tag asset_pack_path('images/favicon.ico'), 
-      rel: 'icon', type: 'image/x-icon'
+    = render partial: 'layouts/favicons'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = stylesheet_pack_tag 'application', media: 'all', 
       'data-turbolinks-track': 'reload'
   %body
     %nav.navbar.navbar-expand-lg.navbar-light.light.bg-light
-      %a.navbar-brand{:href => "/"} SFSPI Management System
+      %a.navbar-brand{:href => "/"}
+        = img_src_set prefix: 'images/logo', ext: 'png',
+          default_size: '20w', class: 'img-fluid',
+          srcset: [ {size: '20w', max_wdith: '576px', image_size: '20px'},
+            {size: '80w', min_width: '992px', image_size: '60px'}, 
+            {size: '40w', min_width: '577px', image_size: '40px'} ]
+        SFSPI Intranet
       %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", 
         "aria-expanded" => "false", 
         "aria-label" => "Toggle navigation", 

@@ -56,4 +56,38 @@ module ApplicationHelper
 
     links
   end
+
+  def img_src_set(options = {})
+    prefix = options.delete :prefix
+    default_size = options.delete :default_size
+    ext = options.delete :ext
+    srcset = options.delete(:srcset) || []
+    content = options.delete(:content) || ''
+
+    options[:src] = asset_pack_path(
+        "#{prefix}-#{default_size}.#{ext}"
+    )
+
+    srcset_value = []
+    sizes_value = []
+
+    srcset.each do |s|
+      img_path = asset_pack_path(
+        "#{prefix}-#{s[:size]}.#{ext}"
+      )
+
+      srcset_value << "#{img_path} #{s[:size]}"
+
+      if s[:max_width]
+        sizes_value << "(max-width: #{s[:max_width]}) #{s[:image_size]}"
+      elsif s[:min_width]
+        sizes_value << "(min-width: #{s[:min_width]}) #{s[:image_size]}"
+      end
+    end
+
+    options[:srcset] = srcset_value.join(",")
+    options[:sizes]  = sizes_value.join(",")
+
+    tag.img content, options
+  end
 end

@@ -34,3 +34,13 @@ td.stretch {
 .invalid-feedback.independent-feedback {
   display: block;
 }
+
+.navbar-brand img {
+  max-width: 40px;
+}
+
+@include media-breakpoint-up(md) {
+  .navbar-brand img {
+    max-width: 60px;
+  }
+}

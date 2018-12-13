@@ -1,11 +1,16 @@
 - title 'Home'
 .jumbotron
-  .container
-    .row.align-items-center.h-100
-      .col-md-2
-        %img.img-fluid{src: asset_pack_path('images/logo.png')}
-      .col-md-10
-        %h1 SFSPI Attendance Reports
+  .row.h-100
+    .col-md-3.col-4.text-center.my-auto
+      -# srcset picks the first rule that matches so order matters
+         max_width followed my min_width rules in descending order.
+      = img_src_set prefix: 'images/logo', ext: 'png',
+        default_size: '80w', class: 'img-fluid',
+        srcset: [ {size: '80w', max_width: '576px', image_size: '80px'},
+        {size: '320w', min_width: '992px', image_size: '320px'},
+        {size: '150w', min_width: '577px', image_size: '150px'} ]
+    .col.my-auto
+      %h1 SFSPI Attendance Reports
 %p
   - unless user_signed_in?
     %p Please click the login button to login with your Office365 account.
