@@ -6,20 +6,21 @@
     fixDataTables('#member_list')
   })
 
-%table.table.table-striped#member_list
-  %thead
-    %tr
-      %th{scope: 'col'} Name
-      %th{scope: 'col'} Path(s)
-      %th{scope: 'col'} Level
-      %th{scope: 'col'} Phone Number
-      %th{scope: 'col'} Email
-  %tbody
-    - @members.each do |member|
+.table-responsive-sm
+  %table.table.table-striped#member_list
+    %thead
       %tr
-        %td
-          = link_to member.pseudonym, member_path(member.id)
-        %td= member.path.nil?  ? '' : member.path.map(&:name).join(',')
-        %td= member.level.nil? ? '' : member.level.name
-        %td= member.mobile_number
-        %td= member.email_address
+        %th{scope: 'col'} Name
+        %th{scope: 'col'} Path(s)
+        %th{scope: 'col'} Level
+        %th{scope: 'col'} Phone Number
+        %th{scope: 'col'} Email
+    %tbody
+      - @members.each do |member|
+        %tr
+          %td
+            = link_to member.pseudonym, member_path(member.id)
+          %td= member.path.nil?  ? '' : member.path.map(&:name).join(',')
+          %td= member.level.nil? ? '' : member.level.name
+          %td= member.mobile_number
+          %td= member.email_address
