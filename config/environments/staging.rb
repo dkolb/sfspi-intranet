@@ -86,24 +86,29 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  response = RestClient.get(
+    "https://mailtrap.io/api/v1/inboxes.json"\
+    "?api_token=#{ENV['MAILTRAP_API_TOKEN']}"
+  )
+
+  first_inbox = JSON.parse(response)[0] # get first inbox
   default_host = "#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
 
-  # Do not dump schema after migrations.
-  config.active_record.dump_schema_after_migration = false
+  config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.default_url_options = {
     host: default_host
   }
 
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.perform_deliveries = true
   config.action_mailer.smtp_settings = {
-    :user_name => ENV['SENDGRID_USERNAME'],
-    :password => ENV['SENDGRID_PASSWORD'],
-    :domain => 'yourdomain.com',
-    :address => 'smtp.sendgrid.net',
-    :port => 587,
-    :authentication => :plain,
-    :enable_starttls_auto => true
+    :user_name => first_inbox['username'],
+    :password => first_inbox['password'],
+    :address => first_inbox['domain'],
+    :domain => first_inbox['domain'],
+    :port => first_inbox['smtp_ports'][0],
+    :authentication => :plain
   }
+
+  # Do not dump schema after migrations.
+  config.active_record.dump_schema_after_migration = false
 end
