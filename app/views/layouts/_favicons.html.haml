@@ -24,7 +24,6 @@
   rel: "icon", sizes: "16x16", :type => "image/png"}
 %link{href: asset_pack_path("favicons/favicon-128.png"),
   rel: "icon", sizes: "128x128", :type => "image/png"}
-%meta{content: "SFSPI Management System", name: "application-name"}
 %meta{content: "#FD7E17", name: "msapplication-TileColor"}
 %meta{content: asset_pack_path("favicons/mstile-144x144.png"),
   name: "msapplication-TileImage"}
@@ -36,3 +35,8 @@
   name: "msapplication-wide310x150logo"}
 %meta{content: asset_pack_path("favicons/mstile-310x310.png"),
   name: "msapplication-square310x310logo"}
+
+- if Rails.env == 'staging'
+  %meta{content: 'SFSPI Intranet (Staging)', name: 'application-name'}
+- else
+  %meta{content: "SFSPI Management System", name: "application-name"}
