@@ -1,5 +1,7 @@
 New Meeting Reported
 \====================
+
+The secretary has reported on meeting attendance.
 - ['date', 'type'].each do |f| 
   = "  #{@meeting.class.human_attribute_name(f)} : #{@meeting.send(f)}"
 = "  Attendees: "
