@@ -56,6 +56,9 @@ class MeetingsController < ApplicationController
 
     if @meeting.valid?
       @meeting.save
+      fields = @meeting.fields.clone
+      fields['id'] = @meeting.id
+      MeetingsMailer.with(meeting: fields).new_event_email.deliver_later
       flash[:success] = "Meeting created!"
       redirect_to action: :show, id: @meeting.id
     else

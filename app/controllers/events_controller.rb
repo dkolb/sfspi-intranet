@@ -80,9 +80,9 @@ class EventsController < ApplicationController
 
     if @event.valid?
       @event.save
-      event_details = @event.fields
-      event_details['id'] = @event.id
-      EventsMailer.with(event: @event.fields).new_event_email.deliver_later
+      event_fields = @event.fields.clone
+      event_fields['id'] = @event.id
+      EventsMailer.with(event: event_fields).new_event_email.deliver_later
       flash[:success] = "Point Nun Form created!"
       redirect_to action: :edit, id: @event.id
     else
