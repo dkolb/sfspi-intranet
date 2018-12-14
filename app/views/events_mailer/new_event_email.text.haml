@@ -1,0 +1,18 @@
+New Point Nun Report Form Filed
+\===============================
+- ['date', 'name', 'venue', 'purpose', 'successes', 'challenges'].each do |f|
+  = "  #{@event.class.human_attribute_name(f)} : #{@event.send(f)}"
+= "  Attendees:"
+- @event.attendees.map(&:pseudonym).each do |a|
+  = "    * #{a}"
+= "  Point Members:"
+- @event.point_members.map(&:pseudonym).each do |p|
+  = "    * #{p}"
+- if @event.reporting_member.nil?
+  = "  Reporting Member: No Reporting Member"
+- else
+  = "  Reporting Member: #{@event.reporting_member.pseudonym}"
+
+You can view this event at the SFSPI Management site at:
+
+= url_for(controller: 'events', action: 'show', id: @event_id)

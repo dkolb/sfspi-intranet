@@ -15,6 +15,7 @@ gem 'js-routes'
 gem 'webpacker'
 gem 'bootstrap_form'
 gem 'haml'
+gem 'haml-rails'
 gem 'rest-client'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

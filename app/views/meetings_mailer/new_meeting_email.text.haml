@@ -1,0 +1,11 @@
+New Meeting Reported
+\====================
+- ['date', 'type'].each do |f| 
+  = "  #{@meeting.class.human_attribute_name(f)} : #{@meeting.send(f)}"
+= "  Attendees: "
+- @meeting.attendees.map(&:pseudonym).each do |a|
+  = "    * #{a}"
+
+You can view this event at the SFSPI Management site at:
+
+= url_for(controller: 'meetings', action: 'show', id: @meeting_id)

@@ -1,0 +1,16 @@
+%h1 New Meeting Attendance Reported
+%table
+  %tbody
+    - ['date', 'type'].each do |f|
+      %tr
+        %th{scope: 'row'}= @meeting.class.human_attribute_name(f)
+        %td= @meeting.send(f)
+    %tr
+      %th{scope: 'row'} Attendees
+      %td
+        - @meeting.attendees.map(&:pseudonym).each do |a|
+          %p= a
+%p
+  You may view this meeting 
+  = link_to 'on the SFSPI Management Site', 
+    url_for(controller: 'meetings', action: 'show', id: @meeting_id)
