@@ -47,13 +47,5 @@ Rails.application.routes.draw do
   get '/events/by_range/:start_date/:end_date',
     to: 'events#by_date_range',
     as: 'events_by_date_range'
-  #Administration
-  get '/admin/users',
-    to: 'admin#users',
-    as: 'admin_users_get'
-
-  post '/admin/users',
-    to: 'admin#update_users',
-    as: 'admin_users_post'
 end
 
