@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
       end
 
       session[:user_id] = @user.id
-      redirect_to request.env['omniauth.origin'] || root_path
+      redirect_to auth_origin
     end
   end
 
@@ -34,4 +34,10 @@ class SessionsController < ApplicationController
     flash[:error] = 'Something went wrong during authentication. Sorry.'
     redirect_to root_path
   end
+
+  private 
+  def auth_origin
+    request.env['omniauth.origin'] || session[:auth_origin] || root_path
+  end
+
 end

@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   include EventsHelper
   include SharedFormHelper
-  before_action :authenticate, only: [ :select_event, :edit, :edit_do ]
+  before_action :authenticate, except: [ :by_date, :by_date_rang  ]
   before_action :authenticate_api, only: [ :by_date, :by_date_range ]
 
   def by_date

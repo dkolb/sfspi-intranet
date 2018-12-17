@@ -3,6 +3,7 @@ class MeetingsController < ApplicationController
   include SharedFormHelper
   before_action :authenticate, only: [:index, :show]
   before_action :authorize_secretary, only: [:edit, :update, :new, :create]
+  before_action :authenticate_api, only: [:by_date_range]
 
   def by_date_range
     render json: meetings_for_date_range(params[:start_date], params[:end_date])

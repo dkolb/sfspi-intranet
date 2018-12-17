@@ -14,18 +14,18 @@ class ApplicationController < ActionController::Base
 
 
   def authorize_admin
-    redirect_to :login unless user_signed_in?
-    unless is_admin?
+    authenticate
+    if !performed? && !is_admin?
       flash[:error] = 'You do not have permission to do do that!'
-      redirect_to root_path
+      redirect_to :back
     end
   end
 
   def authorize_secretary
-    redirect_to :login unless user_signed_in?
-    unless is_secretary? || is_admin?
+    authenticate
+    if !performed? && !(is_secretary? || is_admin?)
       flash[:error] = 'You do not have permission to do that!'
-      redirect_to root_path
+      redirect_to :back
     end
   end
 
@@ -46,7 +46,10 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate
-    redirect_to :login unless user_signed_in?
+    unless user_signed_in?
+      session[:auth_origin] = request.original_url
+      redirect_to login_path(params: { origin: request.original_url } )
+    end
   end
 
   def authenticate_api
