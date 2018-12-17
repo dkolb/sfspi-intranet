@@ -1,0 +1,18 @@
+%h1 User Updated
+%p Your user account on the intranet has been updated.
+%table
+  %tbody
+    - ['display_name','job_title'].each do |f|
+      %tr
+        %th{scope: 'row'}=@user.class.human_attribute_name(f)
+        %td=@user[f]
+    %tr
+      %th{scope: 'row'}Assigned Roles
+      %td=@user.roles.join(", ")
+    %tr
+      %th{scope: 'row'}Record Linked to
+      %td
+        - if @user.record_link
+          = "#{@member.pseudonym} / #{@member.id}"
+        - else
+          No Linked Record

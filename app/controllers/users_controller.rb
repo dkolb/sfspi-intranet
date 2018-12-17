@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :authorize_admin
+
   def index
     @users = User.order(:display_name)
     @members = Member.all(sort: {'Pseudonym' => 'asc'})
@@ -15,6 +17,7 @@ class UsersController < ApplicationController
       if u.changed?
         changes << "User `#{u.display_name}` updated!"
         u.save
+        UserMailer.with(user: u).user_updated_email.deliver_later
       end
     end
     if changes.length > 0
@@ -22,6 +25,6 @@ class UsersController < ApplicationController
     else
       flash[:info] = "No changes detected."
     end
-    redirect_to admin_users_get_path
+    redirect_to action: 'index' 
   end
 end

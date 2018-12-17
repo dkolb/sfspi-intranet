@@ -1,0 +1,14 @@
+User Account Updated
+\====================
+
+Your user account on the intranet has been updated.
+- ['display_name','job_title'].each do |f|
+  = "  #{@user.class.human_attribute_name(f)}: #{@user[f]}"
+= "  Assigned Roles: #{@user.roles.join(", ")}"
+- if @user.record_link
+  = "  Record Linked to: #{@member.pseudonym} / #{@member.id}"
+- else
+  = "  Record Linked to: None"
+
+Please set up their record link 
+= url_for(controller: 'users', action: 'index')
