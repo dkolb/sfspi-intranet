@@ -25,6 +25,10 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @reporting_member = @event.reporting_member_raw.nil? ?
       Member.empty : @event.reporting_member
+    if is_admin? || is_secretary?
+      @records = Member.all.map { |m| [m.pseudonym, m.id] }
+      @selected = @records.find { |r| r[1] =~ /#{@reporting_member.id}/ }
+    end
   end
 
   def update
@@ -68,6 +72,10 @@ class EventsController < ApplicationController
     @event = Event.new_assign_attributes({
       reporting_member_raw: [ @member.id ]
     })
+    if is_admin? || is_secretary?
+      @records = Member.all.map { |m| [m.pseudonym, m.id] }
+      @selected = @records.find { |r| r[1] =~ /#{@reporting_member.id}/ }
+    end
   end
 
   def create

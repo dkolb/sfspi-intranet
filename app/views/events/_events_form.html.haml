@@ -9,8 +9,13 @@
       .col-sm-2
       .col-sm-10
         #same_day_events
-    = f.fields_for(@reporting_member) do |fm|
-      = fm.static_control :pseudonym, label: 'Reporting Member', name: ''
+    - if is_admin? || is_secretary?
+      = f.select :reporting_member_raw,
+        options_for_select(@records, @selected),
+        label: 'Reporting Member'
+    - else
+      = f.fields_for(@reporting_member) do |fm|
+        = fm.static_control :pseudonym, label: 'Reporting Member', name: ''
     = f.hidden_field :reporting_member_raw
     = f.text_field :name, label: 'Event Name', autocomplete: 'none'
     = f.text_field :venue

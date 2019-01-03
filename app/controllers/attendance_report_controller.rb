@@ -5,7 +5,7 @@ class AttendanceReportController < ApplicationController
   def select_member
     @records = Member.all.map { |m| [ m.pseudonym, m.id ] }
     @selected = @records.find { |r| r[1] =~ /#{current_user.record_link}/ }
-    @records = [ @selected ] unless is_admin?
+    @records = [ @selected ] unless is_admin? || is_secretary?
   end
 
   def generate
