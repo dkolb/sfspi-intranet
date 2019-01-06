@@ -4,7 +4,7 @@ class EmergencyContact < Airrecord::Table
   self.table_name = 'Emergency Contacts'
 
   has_one :member,
-    class: 'Members',
+    class: 'Member',
     column: 'Member'
 
   map_field :contact_name, 'Contact Name'

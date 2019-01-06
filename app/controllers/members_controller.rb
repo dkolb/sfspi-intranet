@@ -35,13 +35,14 @@ class MembersController < ApplicationController
     unless can_edit?
       flash[:error] = "You do not have permission to edit this member!"
       redirect_to member_path(params[:id])
+      return
     end
 
     profile_params = params.permit(profile: {}).to_h.fetch(:profile)
     clean_blanks_from_form(profile_params)
 
     changes_saved = false
-    member = member_for(current_user)
+    member = Member.find(params[:id]) 
     emergency_contact = emergency_contact_for(member)
 
     member.assign_attributes(profile_params[:member])
@@ -51,7 +52,7 @@ class MembersController < ApplicationController
     emergency_contact.assign_attributes(profile_params[:emergency_contact])
 
     if emergency_contact.new_record?
-      emergency_contact.member = [ member.id ]
+      emergency_contact.member = member
     end
 
     changes_saved ||= emergency_contact.changed?
