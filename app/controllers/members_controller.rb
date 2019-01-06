@@ -14,7 +14,7 @@ class MembersController < ApplicationController
 
   def show
     @user = current_user
-    @member = member_for(@user)
+    @member = Member.find(params[:id])
     @e_contact = emergency_contact_for(@member)
     @paths = paths
   end
@@ -23,9 +23,10 @@ class MembersController < ApplicationController
     unless can_edit?
       flash[:error] = "You do not have permission to edit this member!"
       redirect_to member_path(params[:id])
+      return
     end
     @user = current_user
-    @member = member_for(@user)
+    @member = Member.find(params[:id])
     @e_contact = emergency_contact_for(@member)
     @paths = paths
   end
