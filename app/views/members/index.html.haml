@@ -20,7 +20,7 @@
         %tr
           %td
             = link_to member.pseudonym, member_path(member.id)
-          %td= member.path.nil?  ? '' : member.path.map(&:name).join(',')
+          %td= member.path.nil?  ? '' : member.path.map(&:name).join(', ')
           %td= member.level.nil? ? '' : member.level.name
           %td= member.mobile_number
           %td= member.email_address
