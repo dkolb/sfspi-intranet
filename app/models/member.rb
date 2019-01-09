@@ -55,7 +55,8 @@ class Member < Airrecord::Table
       level_map = Level.level_map
       Member.records(
         fields: ['Path', 'Level', 'Pseudonym', 'Mobile Number', 'E-Mail'],
-        filter: '{Status} = "Active"'
+        filter: '{Status} = "Active"',
+        sort: { "Pseudonym" => "asc" }
       ).map do |m|
         YellowPageView.new(
           id: m.id,
