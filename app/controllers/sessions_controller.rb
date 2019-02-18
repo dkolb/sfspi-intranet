@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    redirect_to root_path
+    redirect_to o365_logout_url
   end
 
   def auth_failure
@@ -40,4 +40,8 @@ class SessionsController < ApplicationController
     request.env['omniauth.origin'] || session[:auth_origin] || root_path
   end
 
+  def o365_logout_url
+    "https://login.windows.net/common/oauth2/logout?" \
+      "post_logout_redirect_uri=#{request.base_url}"
+  end
 end

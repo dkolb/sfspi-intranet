@@ -25,17 +25,10 @@ class Event < Airrecord::Table
   map_field :attendees_raw, 'Attendees'
   map_field :reporting_member_raw, 'Reporting Member'
   map_field :if_last_12_months, 'If Last 12 Months', read_only: true
+  map_checkbox_field :form_filed, 'Form Filed?'
 
   def last_12_months?
     self['If Last 12 Months'] == 1
-  end
-
-  def form_filed
-    self['Form Filed?'] || true
-  end
-
-  def form_filed=(new_value)
-    self['Form Filed?'] = new_value.to_s == "true"
   end
 
   validates_presence_of :name, :venue

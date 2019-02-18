@@ -29,6 +29,18 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def authorize_calendar_admin
+    authenticate
+    if !performed? && !(is_calendar_admin? || is_admin?)
+      flash[:error] = 'You do not have permission to do that!'
+      redirect_to :back
+    end
+  end
+
+  def is_calendar_admin?
+    user_signed_in? && current_user.roles.include?('calendar_admin')
+  end
+
   def is_admin?
     user_signed_in? && current_user.roles.include?('admin')
   end
@@ -64,7 +76,6 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
 
-  DATE_PARAM_PART_REGEX = /^date\(\d+([if])\)/
   def parse_date_parts(form_params, field_name)
     result = form_params.each_with_object({args: [], delete: []}) do |(k, v), res| 
       matches = /^#{field_name.to_s}\((?<index>\d+)(?<type>[if])\)/.match(k)
@@ -87,7 +98,7 @@ class ApplicationController < ActionController::Base
       form_params.delete key
     end
 
-    form_params[field_name] = Date.new(*result[:args])
+    form_params[field_name] = DateTime.new(*result[:args])
   end
 
   def clean_blanks_from_form(form_params)

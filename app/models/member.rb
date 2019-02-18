@@ -39,6 +39,12 @@ class Member < Airrecord::Table
 
   map_field :emergency_contact_raw, 'Emergency Contact'
 
+  has_many :events_reported,
+    calss: 'Event',
+    column: 'Events Reported'
+
+  map_field :events_reported_raw, 'Events Reported'
+
   map_field :full_name, 'Full Name'
   map_field :path, 'Path'
   map_field :pseudonym, 'Pseudonym'
