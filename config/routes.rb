@@ -44,9 +44,5 @@ Rails.application.routes.draw do
   get '/events/by_date/:date',
     to: 'events#by_date',
     as: 'events_by_date'
-
-  get '/events/by_range/:start_date/:end_date',
-    to: 'events#by_date_range',
-    as: 'events_by_date_range'
 end
 

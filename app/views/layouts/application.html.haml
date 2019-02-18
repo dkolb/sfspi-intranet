@@ -35,8 +35,7 @@
               = nav_link_to "Point Nun Reports", events_path, :inclusive
               = nav_link_to "Attendance Report", attendance_start_path, 
                 :inclusive
-              = dropdown_nav "Meetings", "meetingsDropdown", /^\/meetings/,
-                meetings_dropdown_links
+              = nav_link_to "Meeting", meetings_path, :inclusive
               = nav_link_to "Members", members_path, :inclusive
             - if is_admin?
               = dropdown_nav 'Administration', 'adminDropdown', /^\/admin/, 

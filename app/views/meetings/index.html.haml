@@ -1,6 +1,8 @@
 - title 'Meetings'
 %h2 Manage Meeting Attendance
-
+.d-flex.justify-content-end
+  = link_to 'Create New Meeting', new_meeting_path,
+    class: 'btn btn-primary'
 - content_for(:desc) do
   %p Please select the link below for the meeting you wish to view.
 = render 'shared/year_search_form'
