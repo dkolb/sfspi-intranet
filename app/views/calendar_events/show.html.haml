@@ -1,0 +1,22 @@
+- title "Event - #{@calendar_event.name}"
+%h1= "Calendar Event: #{@calendar_event.name}"
+= link_to 'Edit', edit_calendar_event_path(@calendar_event.id)
+\|
+= link_to 'Delete', calendar_event_path(@calendar_event.id),
+  data: { confirm: 'Are you sure you want to delete this event?' },
+  method: :delete
+\|
+= link_to 'Back', calendar_events_path
+.container
+  = bootstrap_form_with(model: @calendar_event,
+    url: "#", layout: :horizontal) do |f|
+    = f.static_control :location
+    = f.static_control :start_time, label: "Start TIme"
+    = f.static_control :end_time, label: "End Time"
+    = collection_check_boxes_columns f, :point_members_raw,
+      active_member_records, :id, :pseudonym, label_text: "Point Members",
+      disabled: true
+    .form-group.row
+      .col-sm-2
+      .col-sm-10
+        = f.check_box :approved, label: "Approved by Connections", disabled: true

@@ -5,10 +5,11 @@
   %table.table.table-striped
     %thead
       %tr
-        %th{:scope => "col"} Local User
-        %th{:scope => "col"} Linked Record
-        %th{:scope => "col"} Admin
-        %th{:scope => "col"} Secretary
+        %th{:scope => 'col'} Local User
+        %th{:scope => 'col'} Linked Record
+        %th{:scope => 'col'} Admin
+        %th{:scope => 'col'} Secretary
+        %th{:scope => 'col'} Calendar Admin
     %tbody
       - @users.each do |user|
         = fields_for "users[#{user.id}]", user do |fu|
@@ -22,7 +23,7 @@
               %span.text-muted= user.record_link || 'No Record Linked'
               %br
               = hidden_field_tag "users[#{user.id}][roles][]"
-            - ['admin','secretary'].each do |role|
+            - ['admin','secretary', 'calendar_admin'].each do |role|
               %td
                 = fu.check_box :roles, {multiple: true}, role, nil
       %tr

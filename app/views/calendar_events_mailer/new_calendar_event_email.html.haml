@@ -1,0 +1,17 @@
+%h1 New Calendar Event Created
+%table
+  %tbody
+    - ['name', 'location', 'start_time', 'end_time', 'approved'].each do |f|
+      %tr
+        %th{scope: 'row'}= @calendar_event.class.human_attribute_name(f)
+        %td= @calendar_event.send(f)
+    %tr
+      %th{scope: 'row'} Point Member
+      %td
+        - @calendar_event.point_members.map(&:pseudonym).each do |p|
+          %p= p
+%p
+  You may view this event 
+  = link_to 'on the SFSPI Management Site', 
+    url_for(controller: 'calendar_events', action: 'show', 
+    id: @calendar_event_id)

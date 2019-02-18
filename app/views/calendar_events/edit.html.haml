@@ -1,0 +1,13 @@
+%h1 Editing Calendar Event
+
+= link_to 'Show', calendar_events_path(@calendar_event.id)
+\|
+= link_to 'Delete', calendar_event_path(@calendar_event.id),
+  data: { confirm: 'Are you sure you want to delete this event?' },
+  method: :delete
+\|
+= link_to 'Back', calendar_events_path
+
+= render partial: 'form', locals: { submit_text: 'Update Event',
+  url: {controller: 'calendar_events', action: 'update', id: @calendar_event.id},
+  method: :put}

@@ -32,5 +32,9 @@ module SfspiReports
     config.generators do |g|
       g.assets false
     end
+
+    config.beginning_of_week = :sunday
+
+    config.time_zone = 'Eastern Time (US & Canada)'
   end
 end

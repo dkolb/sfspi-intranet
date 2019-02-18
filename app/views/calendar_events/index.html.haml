@@ -1,0 +1,10 @@
+%h1 Event
+.d-flex.justify-content-end
+  = link_to 'Create New Calendar Event', new_calendar_event_path
+
+=month_calendar events: @calendar_events do |date, events|
+  .date=date.day
+  -events.each do |e|
+    .event{class: [('bg-danger text-white' if !e.approved)]}
+      .event-desc=link_to e.name, calendar_event_path(e.id)
+      .event-time=start_to_end_string e

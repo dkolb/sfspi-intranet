@@ -17,6 +17,7 @@ gem 'bootstrap_form'
 gem 'haml'
 gem 'haml-rails'
 gem 'rest-client'
+gem "simple_calendar", "~> 2.3"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
@@ -81,3 +82,4 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 ruby '2.5.3'
+

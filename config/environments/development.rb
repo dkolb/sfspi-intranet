@@ -70,7 +70,7 @@ Rails.application.configure do
     first_inbox = JSON.parse(response)[0] # get first inbox
 
     if ENV['HEROKU_APP_NAME'].nil?
-      default_host = 'localhost:3000'
+      default_host = 'localhost:5000'
     else
       default_host = "#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
     end
