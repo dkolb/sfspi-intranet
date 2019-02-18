@@ -48,6 +48,10 @@ class EventsController < ApplicationController
         @event.save
         flash[:success] = "Saved event changes!"
       else
+        if is_admin? || is_secretary?
+          @records = Member.all.map { |m| [m.pseudonym, m.id] }
+          @selected = @records.find { |r| r[1] =~ /#{@reporting_member.id}/ }
+        end
         flash[:error] = @event.errors.messages.map do |field_name, message|
           "#{field_name.to_s.titleize} #{message.join(",")}"
         end
@@ -96,6 +100,10 @@ class EventsController < ApplicationController
     else
       flash[:error] = @event.errors.messages.map do |field_name, message|
         "#{field_name.to_s.titleize} #{message.join(",")}"
+      end
+      if is_admin? || is_secretary?
+        @records = Member.all.map { |m| [m.pseudonym, m.id] }
+        @selected = @records.find { |r| r[1] =~ /#{@reporting_member.id}/ }
       end
       render 'new'
     end

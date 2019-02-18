@@ -16,6 +16,9 @@ class CalendarEvent < Airrecord::Table
 
   validates_presence_of :name, :location, :start_time, :end_time, :start_time,
     :end_time
+  
+  validates_presence_of :point_members_raw,
+    message: 'must select at least one'
 
   validate :dates_make_sense?
 

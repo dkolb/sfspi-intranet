@@ -34,45 +34,31 @@ class CalendarEventsController < ApplicationController
   def create
     @calendar_event = CalendarEvent.new_assign_attributes(calendar_event_params)
 
-    respond_to do |format|
-      if @calendar_event.changed? && @calendar_event.valid?
-        @calendar_event.save
-        calendar_fields = @calendar_event.fields.clone
-        calendar_fields['id'] = @calendar_event.id
-        CalendarEventsMailer.with(calendar_event: calendar_fields)
-          .new_calendar_event_email
-          .deliver_later
-        format.html do 
-          flash[:info] = 'Calendar event sucessfully created.'
-          redirect_to action: :show, id: @calendar_event.id 
-        end
-        format.json do 
-          render :show, status: :created, id: @calendar_event
-        end
-      else
-        format.html { render :new }
-        format.json { render json: @calendar_event.errors, status: :unprocessable_entity }
-      end
+    if @calendar_event.valid?
+      @calendar_event.save if @calendar_event.changed?
+      calendar_fields = @calendar_event.fields.clone
+      calendar_fields['id'] = @calendar_event.id
+      CalendarEventsMailer.with(calendar_event: calendar_fields)
+        .new_calendar_event_email
+        .deliver_later
+        flash[:info] = 'Calendar event sucessfully created.'
+      redirect_to action: :show, id: @calendar_event.id 
+    else
+      render :new 
     end
   end
 
   # PATCH/PUT /calendar_events/1
   # PATCH/PUT /calendar_events/1.json
   def update
-    respond_to do |format|
-      @calendar_event.assign_attributes(calendar_event_params)
-      require 'pry'; binding.pry
-      if @calendar_event.changed? && @calendar_event.valid?
-        @calendar_event.save
-        format.html do 
-          flash[:info] = 'Calendar event was successfully updated.'
-          redirect_to action: :show, id: @calendar_event.id 
-        end
-        format.json { render :show, status: :ok, location: @calendar_event }
-      else
-        format.html { render :edit }
-        format.json { render json: @calendar_event.errors, status: :unprocessable_entity }
-      end
+    @calendar_event.assign_attributes(calendar_event_params)
+    require 'pry'; binding.pry
+    if @calendar_event.changed? && @calendar_event.valid?
+      @calendar_event.save
+      flash[:info] = 'Calendar event was successfully updated.'
+      redirect_to action: :show, id: @calendar_event.id 
+    else
+      render :edit
     end
   end
 

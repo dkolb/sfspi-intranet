@@ -2,17 +2,18 @@
   = bootstrap_form_with model: @calendar_event,
     url: url,
     method: local_assigns.fetch(:method, :post),
-    layout: :horizontal do |f|
+    layout: :horizontal,
+    local: true do |f|
     = f.text_field :name, label: 'Event Name', autocomplete: 'none'
     = f.text_field :location, label: 'Location'
     = f.datetime_select :start_time, label: 'Start Time', 
-      datetime_separator: '&nbsp&nbsp'
+      datetime_separator: '&nbsp&nbsp', include_blank: true, default: nil
     = f.datetime_select :end_time, label: 'End Time',
-      datetime_separator: '&nbsp&nbsp'
+      datetime_separator: '&nbsp&nbsp', include_blank: true, default: nil
     = collection_check_boxes_columns f, :point_members_raw,
       active_member_records, :id, :pseudonym, label_text: 'Point Members'
     .form-group.row
       .col-sm-2
       .col-sm-10
         = f.check_box :approved, label: 'Approved by Connections'
-    =f.primary submit_text unless submit_text.nil?
+    = f.primary submit_text unless submit_text.nil?

@@ -98,7 +98,9 @@ class ApplicationController < ActionController::Base
       form_params.delete key
     end
 
-    form_params[field_name] = DateTime.new(*result[:args])
+    if [3, 5].include? result[:args].length
+      form_params[field_name] = DateTime.new(*result[:args])
+    end
   end
 
   def clean_blanks_from_form(form_params)

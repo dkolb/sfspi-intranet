@@ -1,9 +1,7 @@
 - label_content = capture do
   = label_text
-  .invalid-feedback.independent-feedback
-    = errors.join(', ')
 = form_builder.form_group object_method, label: {text: label_content} do        
-  .container.has-errors
+  .container{:class => ('border border-danger rounded' unless errors.length == 0)}
     - collection.in_groups_of(columns) do |group|
       .row
         - group.each do |item|
@@ -16,3 +14,5 @@
                   "data-skiperror": true, disabled: disabled},
                 item.send(value_method),
                 nil
+    .invalid-feedback.independent-feedback
+      = errors.join(',')
