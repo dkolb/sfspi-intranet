@@ -1,13 +1,15 @@
 .simple-calendar
   .calendar-heading.d-flex.flex-row.justify-content-between
     .p-2
-      = link_to t('simple_calendar.previous', default: 'Previous Month'), calendar.url_for_previous_view
+      = link_to t('simple_calendar.previous', default: 'Previous Month'), 
+        calendar.url_for_previous_view, class: 'btn btn-primary'
     .p-2
       %span.calendar-title
         = t('date.month_names')[start_date.month]
         = start_date.year
     .p-2
-      = link_to t('simple_calendar.next', default: 'Next Month'), calendar.url_for_next_view
+      = link_to t('simple_calendar.next', default: 'Next Month'), 
+        calendar.url_for_next_view, class: 'btn btn-primary'
   %table#calendar.table
     %thead
       %tr.weekdays.bg-light

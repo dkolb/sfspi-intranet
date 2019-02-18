@@ -35,7 +35,7 @@ function setDivContentFromEventsList( description, contentDiv, data, translator 
 
     contentDiv.append(eventList)
   } else {
-    contentDiv.html($('<p>').append("No events on this date."))
+    contentDiv.html($('<p>').append("No items for this date."))
   }
 }
 
@@ -47,16 +47,17 @@ function requestJsonUpdateDiv(path, description, contentDiv, button, translator)
   $.getJSON(path)
   .done(function(data) { 
     setDivContentFromEventsList(description, contentDiv, data, translator) 
-    button.prop('disabled', false).attr('value', 'Search');
+    if (button) {
+      button.prop('disabled', false).attr('value', 'Search');
+    }
   })
   .fail(function(jqXHR, textStatus, errorThrown) {
     setDivToError(contentDiv, errorThrown)
   })
 }
 
-function setupDateSelector (
+function setupYearSelector (
   button,
-  monthInput,
   yearInput,
   searchButton,
   contentDiv,
@@ -65,22 +66,17 @@ function setupDateSelector (
   translator
 ) {
   $(document).ready(function() {
-    setEnterKeyFor(monthInput, button)
     setEnterKeyFor(yearInput, button)
     button.click(function() {
       button.prop('disabled', true).attr('value', 'Working...')
-      var month = monthInput.val();
       var year = yearInput.val();
       var description = descriptionDiv.html();
 
-      var start = moment(year + '-' + month, 'YYYY-MM');
-      var path = searchPathFunction(
-        start.format('YYYY-MM-DD'),
-        start.add(1, 'months').format('YYYY-MM-DD')
-      )
+      var path = searchPathFunction(year)
 
       requestJsonUpdateDiv(path, description, contentDiv, button, translator)
     });
+    button.trigger('click');
   });
 }
 
@@ -96,16 +92,17 @@ const SfspiUi = {
 
         if(!isNaN(pdate) && new Date(date).getFullYear() > 2000) {
           var path = Routes.events_by_date_path(date)
-          requestJsonUpdateDiv(path, description, contentDiv)
+          requestJsonUpdateDiv(path, description, contentDiv, null, function(item) {
+            return `${item.name} at ${item.venue}`
+          })
         }
       })
     })
   },
   
-  setupDateSearchForm: function(searchPathFunction, translator) {
-    setupDateSelector(
+  setupYearSearchForm: function(searchPathFunction, translator) {
+    setupYearSelector(
       $('#search_button'),
-      $('#select_month'),
       $('#select_year'),
       $('#search_button'),
       $('#search_results'),
@@ -113,10 +110,6 @@ const SfspiUi = {
       searchPathFunction,
       translator
     );
-  },
-
-  eventsTranslator: function(item) {
-    return `${item.name} at ${item.venue} on ${item.date}`
   },
 
   meetingsTranslator: function(item) {

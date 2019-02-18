@@ -8,11 +8,13 @@ class EventsController < ApplicationController
     render json: events_for_date(params[:date])
   end
 
-  def by_date_range
-    render json: events_for_date_range(params[:start_date], params[:end_date])
-  end
-
   def index
+    if params[:start_date]
+      start_date = params[:start_date].to_date
+    else
+      start_date = Date.today
+    end
+    @events = Event.for_month(start_date)
   end
 
   def show

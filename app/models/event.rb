@@ -39,4 +39,22 @@ class Event < Airrecord::Table
   validates_format_of :date, 
     with: /\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])/,
     message: 'needs to be in YYYY-MM-DD format'
+
+
+  def self.for_month(date)
+    start_date = date.beginning_of_month - 6.days
+    end_date = date.end_of_month + 6.days
+    self.all(
+      filter: 
+        "AND(" \
+        "IS_BEFORE({Date},DATETIME_PARSE('#{end_date.iso8601}')),"\
+        "IS_AFTER({Date},DATETIME_PARSE('#{start_date.iso8601}'))" \
+        ")"
+    )
+  end
+
+  def self.for_date(date)
+    Rails.logger.info('Trying to get dates for query with #{date}')
+    self.all(filter: "{Date} = DATETIME_PARSE('#{date}')")
+  end
 end

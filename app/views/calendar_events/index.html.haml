@@ -1,6 +1,7 @@
-%h1 Event
+%h1 Calendar
 .d-flex.justify-content-end
-  = link_to 'Create New Calendar Event', new_calendar_event_path
+  = link_to 'Create New Calendar Event', new_calendar_event_path,
+    class: 'btn btn-primary'
 
 =month_calendar events: @calendar_events do |date, events|
   .date=date.day

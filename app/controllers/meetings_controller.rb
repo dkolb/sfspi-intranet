@@ -5,8 +5,8 @@ class MeetingsController < ApplicationController
   before_action :authorize_secretary, only: [:edit, :update, :new, :create]
   before_action :authenticate_api, only: [:by_date_range]
 
-  def by_date_range
-    render json: meetings_for_date_range(params[:start_date], params[:end_date])
+  def by_year
+    render json: meetings_by_year(params[:year])
   end
 
   def index
@@ -72,13 +72,11 @@ class MeetingsController < ApplicationController
 
   private
 
-  def meetings_for_date_range(start_date, end_date)
-    Meeting.all(
-      filter: "AND({Date} >= '#{start_date}', {Date} < '#{end_date}')"
-    ).map do |m|
+  def meetings_by_year(year)
+    Meeting.for_year(year).map do |m|
       {
         type: m.type,
-        date: m.date,
+        date: date_display(m.date),
         href: meeting_path(m.id)
       }
     end

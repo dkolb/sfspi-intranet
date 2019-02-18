@@ -1,10 +1,10 @@
 - title 'Search Point Nun Report Forms'
-%h2 Select Point Nun Report Form to View
-- content_for(:desc) do
-  %p Please select the link below for the Point Nun Form you want to view.
-= render 'shared/month_year_search_form'
-:javascript
-  SfspiUi.setupDateSearchForm(
-    Routes.events_by_date_range_path, 
-    SfspiUi.eventsTranslator
-  )
+%h2 Point Nun Reports By Date
+.d-flex.justify-content-end
+  = link_to 'Create New Point Nun Form', new_event_path,
+    class: 'btn btn-primary'
+= month_calendar events: @events, attribute: :date do |date, events|
+  .date=date.day
+  -events.each do |e|
+    .event
+      .event-desc=link_to e.name, event_path(e.id)

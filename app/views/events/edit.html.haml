@@ -1,5 +1,9 @@
 - title 'Edit Point Nun Report Form'
 %h1 Edit Point Nun Report Form
+.d-flex.justify-content-end
+  = link_to 'Show', event_path(@event.id), 
+    class: 'btn btn-primary mx-2'
+  = link_to 'Back', events_path, class: 'btn btn-primary mx-2'
 - unless can_edit?
   .invalid-feedback.independent-feedback
     You cannot edit this event as you did not submit it!

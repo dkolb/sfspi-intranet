@@ -35,4 +35,14 @@ class Meeting < Airrecord::Table
   def allowed_verbose_types
     MEETING_SET_TYPE_MAP.keys
   end
+
+  def self.for_year(year)
+    time = Time.zone.local(year.to_i)
+    start_date = (time - 1.day).strftime('%Y-%d-%m')
+    end_date = (time.end_of_year + 1.day).strftime('%Y-%d-%m')
+    self.all(
+      filter: "AND({Date} > '#{start_date}', {Date} < '#{end_date}')",
+      sort: { "Date" => "asc" }
+    )
+  end
 end

@@ -32,9 +32,7 @@
           %ul.navbar-nav.mr-auto
             - if current_user.record_link
               = nav_link_to "Calendar", calendar_events_path, :inclusive
-              = dropdown_nav "Point Nun Reports", "eventDropdown", /^\/events/,
-                [ { name: 'Point Nun Report Form', path: new_event_path }, 
-                  { name: 'Look Up Old Point Nun Form', path: events_path } ]                                                          
+              = nav_link_to "Point Nun Reports", events_path, :inclusive
               = nav_link_to "Attendance Report", attendance_start_path, 
                 :inclusive
               = dropdown_nav "Meetings", "meetingsDropdown", /^\/meetings/,

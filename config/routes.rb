@@ -36,9 +36,9 @@ Rails.application.routes.draw do
     as: 'attendance_generate_pdf_get'
 
   #Meetings
-  get '/meetings/by_range/:start_date/:end_date',
-    to: 'meetings#by_date_range',
-    as: 'meetings_by_date_range'
+  get '/mettings/by_year/:year',
+    to: 'meetings#by_year',
+    as: 'meetings_by_year'
 
   #Events
   get '/events/by_date/:date',

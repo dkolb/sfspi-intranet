@@ -2,7 +2,8 @@
 %h1 Point Nun Form
 - if can_edit?
   .d-flex.justify-content-end
-    = link_to 'Edit this Form', edit_event_path(@event.id)
+    = link_to 'Edit', edit_event_path(@event.id), class: 'btn btn-primary mx-2'
+    = link_to 'Back', events_path, class: 'btn btn-primary mx-2'
 .container
   = bootstrap_form_with(model: @event, url: '#', layout: :horizontal) do |f|                                                         
     = f.static_control label: 'Date', value: date_display(@event.date)

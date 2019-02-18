@@ -1,28 +1,9 @@
 module EventsHelper
   def events_for_date(date)
-    events = Event.all(
-      filter: "{Date} = DATETIME_PARSE('#{date}')"
-    )
-
-    events.map do |e|
+    Event.for_date(date).map do |e|
       {
         name: e.name,
         venue: e.venue,
-        href: event_path(e.id)
-      }
-    end
-  end
-
-  def events_for_date_range(start_date, end_date)
-    events = Event.all(
-      filter: "AND({Date} >= '#{start_date}', {Date} < '#{end_date}')"
-    )
-
-    events.map do |e|
-      {
-        name: e.name,
-        venue: e.venue,
-        date: e.date,
         href: event_path(e.id)
       }
     end
