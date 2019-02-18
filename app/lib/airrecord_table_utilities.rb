@@ -36,7 +36,7 @@ module AirrecordTableUtilities
       define_method "#{method_name.to_s}_date" do |raw: false|
         value = self[field_name]
         unless value.nil? || raw
-          value = DateTime.iso8601(value).localtime
+          value = Time.zone.iso8601(value)
         end
       end
 

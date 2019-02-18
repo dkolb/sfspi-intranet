@@ -7,9 +7,11 @@
     = f.text_field :name, label: 'Event Name', autocomplete: 'none'
     = f.text_field :location, label: 'Location'
     = f.datetime_select :start_time, label: 'Start Time', 
-      datetime_separator: '&nbsp&nbsp', include_blank: true, default: nil
+      datetime_separator: '&nbsp&nbsp', include_blank: true, default: nil,
+      ampm: true, minute_step: 15
     = f.datetime_select :end_time, label: 'End Time',
-      datetime_separator: '&nbsp&nbsp', include_blank: true, default: nil
+      datetime_separator: '&nbsp&nbsp', include_blank: true, default: nil,
+      ampm: true, minute_step: 15
     = collection_check_boxes_columns f, :point_members_raw,
       active_member_records, :id, :pseudonym, label_text: 'Point Members'
     .form-group.row

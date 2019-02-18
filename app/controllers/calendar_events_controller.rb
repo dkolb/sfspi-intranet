@@ -52,7 +52,6 @@ class CalendarEventsController < ApplicationController
   # PATCH/PUT /calendar_events/1.json
   def update
     @calendar_event.assign_attributes(calendar_event_params)
-    require 'pry'; binding.pry
     if @calendar_event.changed? && @calendar_event.valid?
       @calendar_event.save
       flash[:info] = 'Calendar event was successfully updated.'

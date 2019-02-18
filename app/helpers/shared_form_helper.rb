@@ -42,4 +42,12 @@ module SharedFormHelper
       disabled: disabled
     }
   end
+
+  def time_display(time)
+    time.strftime('%B %-d, %Y %-I:%M %p %Z')
+  end
+
+  def date_display(time)
+    time.strftime('%B %-d, %Y')
+  end
 end

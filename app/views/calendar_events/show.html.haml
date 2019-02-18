@@ -11,8 +11,10 @@
   = bootstrap_form_with(model: @calendar_event,
     url: "#", layout: :horizontal) do |f|
     = f.static_control :location
-    = f.static_control :start_time, label: "Start TIme"
-    = f.static_control :end_time, label: "End Time"
+    = f.static_control label: "Start Time",
+      value: time_display(@calendar_event.start_time)
+    = f.static_control label: "End Time",
+      value: time_display(@calendar_event.end_time)
     = collection_check_boxes_columns f, :point_members_raw,
       active_member_records, :id, :pseudonym, label_text: "Point Members",
       disabled: true
