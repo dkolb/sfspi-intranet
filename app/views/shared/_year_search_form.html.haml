@@ -1,6 +1,6 @@
 = bootstrap_form_with scope: :select, layout: :inline do |f|
   = f.number_field :year, prepend: 'Year', hide_label: true, inline: true,
-    value: Date.today.year
+    value: Time.zone.today.year
   .px-1
   = f.primary 'Search',
     type: 'button',

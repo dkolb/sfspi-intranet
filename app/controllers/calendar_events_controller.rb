@@ -10,7 +10,7 @@ class CalendarEventsController < ApplicationController
     if params[:start_date]
       start_date = params[:start_date].to_date
     else
-      start_date = Date.today
+      start_date = Time.zone.today
     end
     @calendar_events = CalendarEvent.for_month(start_date)
   end

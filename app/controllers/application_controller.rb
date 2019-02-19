@@ -99,7 +99,7 @@ class ApplicationController < ActionController::Base
     end
 
     if [3, 5].include? result[:args].length
-      form_params[field_name] = DateTime.new(*result[:args])
+      form_params[field_name] = Time.zone.local(*result[:args])
     end
   end
 

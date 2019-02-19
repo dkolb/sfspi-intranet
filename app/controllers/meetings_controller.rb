@@ -46,7 +46,7 @@ class MeetingsController < ApplicationController
 
   def new
     @meeting = Meeting.empty
-    @meeting.date = Date.today
+    @meeting.date = Time.zone.today
   end
 
   def create
