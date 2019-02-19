@@ -81,6 +81,73 @@ function setupYearSelector (
 }
 
 
+function getCalendarCheckBoxes() {
+  var state      = new Object();
+  state.allDay   = $('#calendar_event_all_day').is(':checked')
+  state.startTbd = $('#calendar_event_start_time_tbd').is(':checked')
+  state.endTbd   = $('#calendar_event_end_time_tbd').is(':checked')
+  return state
+}
+
+function calendarStateDetermination() {
+  var cbState = getCalendarCheckBoxes()
+  var calendarState = new Object();
+  
+  calendarState.startTimeEnabled = !(cbState.allDay || cbState.startTbd)
+  calendarState.endTimeEnabled   = !(cbState.allDay || cbState.endTbd  )
+
+  return calendarState
+}
+
+function getCalendarElements() {
+  var elements = new Object();
+  elements.start = $(
+    '#calendar_event_start_time_4i,' +
+    '#calendar_event_start_time_5i,' +
+    '#start_timesep'
+  )
+
+  elements.end = $(
+    '#calendar_event_end_time_4i,' +
+    '#calendar_event_end_time_5i,' +
+    '#end_timesep'
+  )
+
+  return elements
+}
+
+
+function setCalendarTimeStates() {
+  var state    = calendarStateDetermination()
+  var elements = getCalendarElements()
+
+  if(state.startTimeEnabled) {
+    elements.start.removeClass('d-none').removeAttr('disabled')
+  } else {
+    elements.start.addClass('d-none').attr('disabled', 'true')
+  }
+
+  if(state.endTimeEnabled) {
+    elements.end.removeClass('d-none').removeAttr('disabled')
+  } else {
+    elements.end.addClass('d-none').attr('disabled', 'true')
+  }
+}
+
+function clearDisabledElements() {
+  var state    = calendarStateDetermination()
+  var elements = getCalendarElements()
+
+  if(!state.startTimeEnabled) {
+    elements.start.val('')
+  }
+
+  if(!state.endTimeEnabled) {
+    elements.end.val('')
+  }
+}
+
+
 const SfspiUi = {
   setupDatePickerAutoSearch: function() {
     $(document).ready(function() {
@@ -114,6 +181,15 @@ const SfspiUi = {
 
   meetingsTranslator: function(item) {
     return `${item.type} on ${item.date}`
+  },
+
+  setupCalendarEventTimeToggles: function() {
+    $(document).ready(function() {
+      $('#calendar_event_all_day').change(setCalendarTimeStates)
+      $('#calendar_event_start_time_tbd').change(setCalendarTimeStates)
+      $('#calendar_event_end_time_tbd').change(setCalendarTimeStates)
+      $('#calendar_event_form').submit(clearDisabledElements)
+    })
   }
 };
 

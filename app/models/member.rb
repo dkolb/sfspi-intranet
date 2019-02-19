@@ -54,6 +54,7 @@ class Member < Airrecord::Table
   map_field :city, 'City'
   map_field :state, 'State'
   map_field :zip, 'Zip'
+  map_date_field :birthday, 'Birthday'
 
   class << self
     def yellow_pages_view
@@ -73,6 +74,13 @@ class Member < Airrecord::Table
           email_address: m.email_address
         )
       end
+    end
+
+    def active
+      Member.all(
+        filter: '{Status} = "Active"',
+        sort: {'Pseudonym' => 'asc'}
+      )
     end
 
     private

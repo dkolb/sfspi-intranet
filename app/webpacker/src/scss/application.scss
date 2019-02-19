@@ -19,9 +19,6 @@ $theme-colors: (
 $jumbotron-bg: $ucla-gold;
 
 @import '~bootstrap/scss/bootstrap';
-$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
-@import '~@fortawesome/fontawesome-free/scss/fontawesome';
-@import '~@fortawesome/fontawesome-free/scss/solid';
 
 body {
   padding-top: 70px;
@@ -120,7 +117,7 @@ caption {
 	padding: 5px;
 	margin-bottom: 5px;
 	line-height: 14px;
-	border: 1px solid #b5dbdc;
+	border: 1px solid gray('500');
 	text-decoration: none;
 }
 
@@ -130,12 +127,32 @@ caption {
 }
 
 #calendar .prev-month, #calendar .next-month {
-	background: gray("400");
+	background-color: gray("400");
 	color: #666;
 }
 
 #calendar .today {
-  background: lighten(color("blue"), 40%);
+  background-color: lighten(color("blue"), 40%);
+}
+
+.event.holiday-event {
+  background-color: #fdf1f2;
+}
+
+.event.normal-event {
+  //background: rgba(180, 220, 220, 0.5);
+  background-color: #daeeed;
+}
+
+.event.birthday-event {
+  background-color: #d4e6f7;
+}
+
+#calendar .event.unapproved-event {
+  background-image: url('warning.svg');
+  background-repeat: no-repeat;
+  background-position: right 3px top 3px;
+  background-attachment: local;
 }
 
 /* ============================

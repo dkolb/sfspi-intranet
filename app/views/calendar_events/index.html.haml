@@ -3,9 +3,26 @@
   = link_to 'Create New Calendar Event', new_calendar_event_path,
     class: 'btn btn-primary'
 
+.d-flex.flex-row.my-3
+  .p-2.event.holiday-event
+    Holidays
+  .p-2.event.birthday-event
+    Birthdays
+  .p-2.event.normal-event
+    Sister Event
+  .p-2
+    %img{src: asset_pack_path('src/scss/warning.svg')}
+    Mistress/Master of Connections needs to approve
+
+%p Click event name to view details.
+
 =month_calendar events: @calendar_events do |date, events|
   .date=date.day
-  -events.each do |e|
-    .event{class: [('bg-danger text-white' if !e.approved)]}
-      .event-desc=link_to e.name, calendar_event_path(e.id)
+  -all_day_first(events).each do |e|
+    .event{class: event_additional_classes(e)}
+      - if e.type == 'Birthday'
+        .event-desc=e.name
+      - else
+        .event-desc=link_to e.name, calendar_event_path(e.id)
       .event-time=start_to_end_string e
+

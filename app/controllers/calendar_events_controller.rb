@@ -12,7 +12,7 @@ class CalendarEventsController < ApplicationController
     else
       start_date = Time.zone.today
     end
-    @calendar_events = CalendarEvent.for_month(start_date)
+    @calendar_events = CalendarEvent.for_month(start_date) + birthday_events
   end
 
   # GET /calendar_events/1
@@ -73,20 +73,40 @@ class CalendarEventsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_calendar_event
-      @calendar_event = CalendarEvent.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_calendar_event
+    @calendar_event = CalendarEvent.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def calendar_event_params
-      the_params = params.permit(calendar_event: {})
-        .to_h
-        .fetch(:calendar_event)
-      clean_blanks_from_form(the_params)
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def calendar_event_params
+    the_params = params.permit(calendar_event: {})
+      .to_h
+      .fetch(:calendar_event)
+    clean_blanks_from_form(the_params)
 
-      parse_date_parts(the_params, :start_time)
-      parse_date_parts(the_params, :end_time)
-      the_params
-    end
+    parse_date_parts(the_params, :start_time)
+    parse_date_parts(the_params, :end_time)
+    the_params
+  end
+
+  def birthday_events
+    this_year = Time.zone.today.year
+    Member.active.map do |m|
+      next if m.birthday.nil?
+      c = CalendarEvent.new({})
+      date = Date.new(
+        this_year,
+        m.birthday.month,
+        m.birthday.day
+      ).to_time
+      c.start_time = date
+      c.end_time = date
+      c.all_day = true
+      c.type = 'Birthday'
+      c.name = "#{m.pseudonym} Birthday"
+      c.approved = true
+      c
+    end.compact
+  end
 end

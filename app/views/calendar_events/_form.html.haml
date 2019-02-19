@@ -3,15 +3,32 @@
     url: url,
     method: local_assigns.fetch(:method, :post),
     layout: :horizontal,
+    id: 'calendar_event_form',
     local: true do |f|
     = f.text_field :name, label: 'Event Name', autocomplete: 'none'
+    = f.collection_select :type, CalendarEvent.allowed_event_types, 
+      :to_s, :to_s 
     = f.text_field :location, label: 'Location'
+    .form-group.row
+      .col-sm-2
+      .col-sm-10
+        = f.check_box :all_day, label: 'All Day'
     = f.datetime_select :start_time, label: 'Start Time', 
       datetime_separator: '&nbsp&nbsp', include_blank: true, default: nil,
-      ampm: true, minute_step: 15
+      ampm: true, minute_step: 15, 
+      time_separator: tag.span(':', id: 'start_timesep')
+    .form-group.row
+      .col-sm-2
+      .col-sm-10
+        = f.check_box :start_time_tbd, label: 'Start Time TBD'
     = f.datetime_select :end_time, label: 'End Time',
       datetime_separator: '&nbsp&nbsp', include_blank: true, default: nil,
-      ampm: true, minute_step: 15
+      ampm: true, minute_step: 15,
+      time_separator: tag.span(':', id: 'end_timesep')
+    .form-group.row
+      .col-sm-2
+      .col-sm-10
+        = f.check_box :end_time_tbd, label: 'End Time TBD'
     = collection_check_boxes_columns f, :point_members_raw,
       active_member_records, :id, :pseudonym, label_text: 'Point Members'
     .form-group.row
@@ -19,3 +36,5 @@
       .col-sm-10
         = f.check_box :approved, label: 'Approved by Connections'
     = f.primary submit_text unless submit_text.nil?
+:javascript
+  SfspiUi.setupCalendarEventTimeToggles()

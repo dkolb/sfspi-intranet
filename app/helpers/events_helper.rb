@@ -10,10 +10,7 @@ module EventsHelper
   end
 
   def active_member_records
-    @active_member_records ||= Member.all(
-      filter: '{Status} = "Active"',
-      sort: {'Pseudonym' => 'asc'}
-    )
+    @active_member_records ||= Member.active
   end
 
   def can_edit?
