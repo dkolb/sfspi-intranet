@@ -38,10 +38,12 @@ class CalendarEventsController < ApplicationController
       @calendar_event.save if @calendar_event.changed?
       calendar_fields = @calendar_event.fields.clone
       calendar_fields['id'] = @calendar_event.id
-      CalendarEventsMailer.with(calendar_event: calendar_fields)
-        .new_calendar_event_email
-        .deliver_later
-        flash[:info] = 'Calendar event sucessfully created.'
+      if calendar_event.type == 'Event'
+        CalendarEventsMailer.with(calendar_event: calendar_fields)
+          .new_calendar_event_email
+          .deliver_later
+      end
+      flash[:info] = 'Calendar event sucessfully created.'
       redirect_to action: :show, id: @calendar_event.id 
     else
       render :new 

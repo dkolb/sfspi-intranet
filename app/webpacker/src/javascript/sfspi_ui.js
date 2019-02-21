@@ -190,6 +190,7 @@ const SfspiUi = {
       $('#calendar_event_end_time_tbd').change(setCalendarTimeStates)
       $('#calendar_event_form').submit(clearDisabledElements)
     })
+    setCalendarTimeStates()
   }
 };
 

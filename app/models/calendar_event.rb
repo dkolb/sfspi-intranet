@@ -20,11 +20,12 @@ class CalendarEvent < Airrecord::Table
   map_checkbox_field :all_day, 'All Day'
   map_field :type, 'Type'
 
-  validates_presence_of :name, :location, :start_time, :end_time, :start_time,
-    :end_time
+  validates_presence_of :location, if: :is_event? 
+
+  validates_presence_of :name, :start_time, :end_time
   
   validates_presence_of :point_members_raw,
-    message: 'must select at least one'
+    message: 'must select at least one', if: :is_event?
 
   validate :dates_make_sense?
 
@@ -44,6 +45,14 @@ class CalendarEvent < Airrecord::Table
     else
       time_display end_time 
     end
+  end
+
+  def is_event?
+    type == 'Event'
+  end
+
+  def is_holiday?
+    type == 'Holiday'
   end
 
   private
@@ -72,10 +81,10 @@ class CalendarEvent < Airrecord::Table
   end
 
   def time_display(time)
-    time.strftime('%B %-d, %Y %-I:%M %p %Z')
+    time.strftime('%B %-d, %Y %-I:%M %p %Z') unless time.nil?
   end
 
   def date_display(time)
-    time.strftime('%B %-d, %Y')
+    time.strftime('%B %-d, %Y') unless time.nil?
   end
 end
