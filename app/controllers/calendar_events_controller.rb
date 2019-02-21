@@ -38,7 +38,7 @@ class CalendarEventsController < ApplicationController
       @calendar_event.save if @calendar_event.changed?
       calendar_fields = @calendar_event.fields.clone
       calendar_fields['id'] = @calendar_event.id
-      if calendar_event.type == 'Event'
+      if @calendar_event.type == 'Event'
         CalendarEventsMailer.with(calendar_event: calendar_fields)
           .new_calendar_event_email
           .deliver_later
