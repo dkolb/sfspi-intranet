@@ -1,9 +1,8 @@
 - title 'Search Point Nun Report Forms'
 %h2 Point Nun Reports By Date
 .d-flex.justify-content-end
-  - if is_admin? || is_secretary?
-    = link_to 'Create New Point Nun Form', new_event_path,
-      class: 'btn btn-primary'
+  = link_to 'Create New Point Nun Form', new_event_path,
+    class: 'btn btn-primary'
 = month_calendar events: @events, attribute: :date do |date, events|
   .date=date.day
   -events.each do |e|
