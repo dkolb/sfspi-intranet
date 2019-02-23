@@ -76,7 +76,8 @@ class EventsController < ApplicationController
     @member = member_for(current_user)
     @reporting_member = @member
     @event = Event.new_assign_attributes({
-      reporting_member_raw: [ @member.id ]
+      reporting_member_raw: [ @member.id ],
+      form_filed: true
     })
     if is_admin? || is_secretary?
       @records = Member.all.map { |m| [m.pseudonym, m.id] }
