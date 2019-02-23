@@ -74,7 +74,7 @@ module AirrecordTableUtilities
         define_method "#{method_name.to_s}=" do |new_value|
           if new_value.is_a? String
             self[field_name] = new_value
-          elsif new_value.is_a? Date || new_value.is_a? Time
+          elsif new_value.is_a?(Date) || new_value.is_a?(Time)
             self[field_name] = new_value.strftime('%Y-%m-%d')
           else
             raise "Value of type #{new_value.class} not recognized!"
