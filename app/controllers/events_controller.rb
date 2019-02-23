@@ -99,7 +99,7 @@ class EventsController < ApplicationController
       event_fields['id'] = @event.id
       EventsMailer.with(event: event_fields).new_event_email.deliver_later
       flash[:success] = "Point Nun Form created!"
-      redirect_to action: :edit, id: @event.id
+      redirect_to action: :show, id: @event.id
     else
       flash[:error] = @event.errors.messages.map do |field_name, message|
         "#{field_name.to_s.titleize} #{message.join(",")}"
