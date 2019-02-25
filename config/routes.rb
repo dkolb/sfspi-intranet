@@ -11,7 +11,13 @@ Rails.application.routes.draw do
   resources :events, except: :destroy
   resources :users, only: :index
   resources :meetings, except: :destroy
+
+  get '/calendar_events/generate_pdf',
+    to: 'calendar_events#generate_pdf',
+    as: 'calendar_events_generate_pdf'
+
   resources :calendar_events
+
 
   post '/users/bulk_update',
     to: 'users#bulk_update'

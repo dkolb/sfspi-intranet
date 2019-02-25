@@ -1,0 +1,17 @@
+.simple-calendar
+  .calendar-heading.d-flex.flex-row.justify-content-between
+    %h2.calendar-title.my-2= "#{t('date.month_names')[start_date.month]} #{start_date.year}"
+  %table#calendar.table
+    %thead
+      %tr.weekdays.bg-light
+        - date_range.slice(0, 7).each do |day|
+          %th{scope: 'col'}= t('date.day_names')[day.wday]
+    %tbody
+      - date_range.each_slice(7) do |week|
+        = content_tag :tr, class: 'days' do
+          - week.each do |day|
+            = content_tag :td, class: calendar.td_classes_for(day) do
+              - if defined?(Haml) && respond_to?(:block_is_haml?) && block_is_haml?(block)
+                - capture_haml(day, sorted_events.fetch(day, []), &block)
+              - else
+                - block.call day, sorted_events.fetch(day, [])

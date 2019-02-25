@@ -35,4 +35,18 @@ module CalendarEventsHelper
     classes << 'birthday-event' if event.type == 'Birthday'
     classes
   end
+
+  def year_for(month)
+    reference = Time.zone.today
+    if month >= reference.month
+      return reference.year
+    else
+      return reference.year - 1
+    end
+  end
+
+  def pdf_calendar_header(start_date, end_date)
+    "SFSPI Calendar for " \
+      "#{@start_date.strftime('%B %Y')} - #{@end_date.strftime('%B %Y')}"
+  end
 end

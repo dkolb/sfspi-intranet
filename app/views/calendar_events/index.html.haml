@@ -1,7 +1,9 @@
 %h1 Calendar
 .d-flex.justify-content-end
+  = link_to 'Print Next 12 Months', calendar_events_generate_pdf_path,
+    class: 'btn btn-primary mx-2'
   = link_to 'Create New Calendar Event', new_calendar_event_path,
-    class: 'btn btn-primary'
+    class: 'btn btn-primary mx-2'
 
 .d-flex.flex-row.my-3
   .p-2.event.holiday-event

@@ -1,0 +1,36 @@
+- title pdf_calendar_header(@start_date, @end_date)
+%h1= pdf_calendar_header(@start_date, @end_date)
+- @months.each do |month|
+  = month_calendar events: @calendar_events,
+    start_date: Time.zone.local(year_for(month), month, 1).to_date,
+    partial: 'simple_calendar/print_month_calendar' do |date, events|
+    .date=date.day
+    - if date.month == month
+      - all_day_first(events).each do |e|
+        .event{class: event_additional_classes(e)}
+          .event-desc=e.name
+          .event-time=start_to_end_string e
+        - content_for(:event_details) do
+          %h3= e.name
+          %table.table.table-striped#event-details
+            %tr
+              %th{scope: 'row'} Type
+              %td= e.type + (e.all_day && e.type == 'Event' ? ' (All Day)' : '')
+            %tr
+              %th{scope: 'row'} All Day Event
+              %td= e.all_day ? 'Yes' : 'No'
+            %tr
+              %th{scope: 'row'} Time of Event
+              %td= "#{e.start_time_display} to #{e.end_time_display}"
+            - if e.type == 'Event'
+              %tr
+                %th{scope: 'row'} Point Members
+                %td= e.point_members.map(&:pseudonym).join(', ')
+          %hr
+  .page-break
+  %h2= "#{t('date.month_names')[month]} Event Details"
+  = yield(:event_details) if content_for?(:event_details)
+  - content_for(:event_details, flush: true) do
+    = ''
+  - if month != @months.last
+    .page-break

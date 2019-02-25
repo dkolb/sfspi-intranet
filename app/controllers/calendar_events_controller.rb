@@ -1,5 +1,6 @@
 class CalendarEventsController < ApplicationController
   include SharedFormHelper
+  include CalendarEventsHelper
   before_action :set_calendar_event, only: [:show, :edit, :update, :destroy]
   before_action :authenticate
   before_action :authorize_calendar_admin, only: [:destroy]
@@ -74,6 +75,23 @@ class CalendarEventsController < ApplicationController
     end
   end
 
+  def generate_pdf
+    @start_date = Time.zone.today.beginning_of_month
+    @year = @start_date.year
+    @end_date = (@start_date + 11.months).end_of_month
+    @calendar_events = CalendarEvent.for_range(@start_date, @end_date) + birthday_events
+    @months = months_in_events(@calendar_events)
+    render pdf: "sfspi_calendar.pdf",
+      disposition: 'inline',
+      template: 'calendar_events/pdf_calendar',
+      layout: 'pdf',
+      dpi: '200',
+      page_size: 'letter',
+      orientation: 'Portrait',
+      disable_internal_links: true,
+      disable_external_links: true
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_calendar_event
@@ -93,12 +111,11 @@ class CalendarEventsController < ApplicationController
   end
 
   def birthday_events
-    this_year = Time.zone.today.year
     Member.active.map do |m|
       next if m.birthday.nil?
       c = CalendarEvent.empty
       date = Time.zone.local(
-        this_year,
+        year_for(m.birthday.month),
         m.birthday.month,
         m.birthday.day
       )
@@ -110,5 +127,14 @@ class CalendarEventsController < ApplicationController
       c.approved = true
       c
     end.compact
+  end
+
+  def months_in_events(events)
+    months = Set.new
+    events.each_with_object(months) do |event, months|
+      months.add(event.start_time.month)
+      months.add(event.end_time.month)
+    end
+    months.sort.partition{ |m| m >= @start_date.month }.flatten
   end
 end

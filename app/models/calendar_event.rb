@@ -55,15 +55,6 @@ class CalendarEvent < Airrecord::Table
     type == 'Holiday'
   end
 
-  private
-
-  def dates_make_sense?
-    return if [start_time.blank?, end_time.blank?].any?
-    if start_time > end_time
-      errors.add(:start_time, 'must be before the end time')
-    end
-  end
-
   def self.for_month(date)
     start_date = date.beginning_of_month - 6.days
     end_date = date.end_of_month + 6.days
@@ -76,8 +67,40 @@ class CalendarEvent < Airrecord::Table
     )
   end
 
+  def self.for_year(year)
+    start_date = Time.zone.local(year.to_i, 1, 1)
+    end_date   = Time.zone.local(year.to_i, 12, 31)
+    self.all(
+      filter:
+      "AND(" \
+      "IS_BEFORE({Start Time}, DATETIME_PARSE('#{end_date.iso8601}')),"\
+      "IS_AFTER({Start Time}, DATETIME_PARSE('#{start_date.iso8601}'))"\
+      ")"
+    )
+  end
+
+  # Arguments must respond to #iso8601
+  def self.for_range(start_date, end_date)
+    self.all(
+      filter:
+      "AND(" \
+      "IS_BEFORE({Start Time}, DATETIME_PARSE('#{end_date.iso8601}')),"\
+      "IS_AFTER({Start Time}, DATETIME_PARSE('#{start_date.iso8601}'))"\
+      ")"
+    )
+  end
+
   def self.allowed_event_types
     EVENT_TYPES
+  end
+
+  private
+
+  def dates_make_sense?
+    return if [start_time.blank?, end_time.blank?].any?
+    if start_time > end_time
+      errors.add(:start_time, 'must be before the end time')
+    end
   end
 
   def time_display(time)
