@@ -96,12 +96,12 @@ class CalendarEventsController < ApplicationController
     this_year = Time.zone.today.year
     Member.active.map do |m|
       next if m.birthday.nil?
-      c = CalendarEvent.new({})
-      date = Date.new(
+      c = CalendarEvent.empty
+      date = Time.zone.local(
         this_year,
         m.birthday.month,
         m.birthday.day
-      ).to_time
+      )
       c.start_time = date
       c.end_time = date
       c.all_day = true
