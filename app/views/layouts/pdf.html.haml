@@ -3,8 +3,8 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %meta{:charset => "utf-8"}/
-    %link{:crossorigin => "anonymous", :href => "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css", :integrity => "sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm", :rel => "stylesheet"}/
-    %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css", :rel => "stylesheet"}/
+    = inline_remote_stylesheet 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
+    = inline_remote_stylesheet 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css'
     :css
       table {
         page-break-inside:auto;
@@ -53,14 +53,12 @@
       #calendar .weekdays {
       }
 
-
       #calendar .weekdays th {
         text-align: center;
         text-transform: uppercase;
         line-height: 20px;
         border: none !important;
         padding: 10px 6px;
-        /*color: #fff;*/
         font-size: 13px;
       }
 
@@ -144,9 +142,9 @@
         clear: both;
         page-break-after: always;
       }
-    %script{:crossorigin => "anonymous", :integrity => "sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=", :src => "https://code.jquery.com/jquery-3.3.1.slim.min.js"}
-    %script{:crossorigin => "anonymous", :integrity => "sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q", :src => "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"}
-    %script{:crossorigin => "anonymous", :integrity => "sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl", :src => "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"}
+    = inline_remote_js 'https://code.jquery.com/jquery-3.3.1.slim.min.js'
+    = inline_remote_js 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'
+    = inline_remote_js 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'
     :javascript
       $(document).ready(function() {
         $('a').contents().unwrap()

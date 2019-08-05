@@ -41,7 +41,7 @@ module CalendarEventsHelper
     if month >= reference.month
       return reference.year
     else
-      return reference.year - 1
+      return reference.year + 1
     end
   end
 

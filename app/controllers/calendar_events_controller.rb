@@ -81,15 +81,19 @@ class CalendarEventsController < ApplicationController
     @end_date = (@start_date + 11.months).end_of_month
     @calendar_events = CalendarEvent.for_range(@start_date, @end_date) + birthday_events
     @months = months_in_events(@calendar_events)
-    render pdf: "sfspi_calendar.pdf",
-      disposition: 'inline',
-      template: 'calendar_events/pdf_calendar',
-      layout: 'pdf',
-      dpi: '200',
-      page_size: 'letter',
-      orientation: 'Portrait',
-      disable_internal_links: true,
-      disable_external_links: true
+    if params[:html] == 'true'
+      render 'calendar_events/pdf_calendar', layout: 'pdf'
+    else
+      render pdf: "sfspi_calendar.pdf",
+         disposition: 'inline',
+         template: 'calendar_events/pdf_calendar',
+         layout: 'pdf',
+         dpi: '200',
+         page_size: 'letter',
+         orientation: 'Portrait',
+         disable_internal_links: true,
+         disable_external_links: true
+    end
   end
 
   private

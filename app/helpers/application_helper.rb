@@ -81,4 +81,14 @@ module ApplicationHelper
 
     tag.img content, options
   end
+
+  def inline_remote_stylesheet(source)
+    css = Net::HTTP.get(URI(source))
+    tag.style(css)
+  end
+
+  def inline_remote_js(source)
+    js = Net::HTTP.get(URI(source))
+    tag.script(js)
+  end
 end

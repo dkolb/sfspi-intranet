@@ -9,7 +9,7 @@ gem 'activerecord-session_store'
 gem 'active_link_to'
 gem 'airrecord'
 gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary'
+gem 'wkhtmltopdf-heroku'
 gem 'browser'
 gem 'js-routes'
 gem 'webpacker'
@@ -76,6 +76,7 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'webdrivers'
+  gem 'wkhtmltopdf-binary-edge'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
