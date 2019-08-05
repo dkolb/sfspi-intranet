@@ -6,15 +6,23 @@
     class: 'btn btn-primary mx-2'
 
 .d-flex.flex-row.my-3
-  .p-2.event.holiday-event
+  .p-2.event.holiday-event.align-self-center
     Holidays
-  .p-2.event.birthday-event
+  .p-2.event.birthday-event.align-self-center
     Birthdays
-  .p-2.event.normal-event
+  .p-2.event.normal-event.align-self-center
     Sister Event
-  .p-2
+  .pl-2.py-2.align-self-center
     %img{src: asset_pack_path('src/scss/warning.svg')}
-    Mistress/Master of Connections needs to approve
+  .pr-2.py-2.mr-auto.align-self-center
+    Connections needs to approve
+  = bootstrap_form_with scope: :go_to, layout: :inline,
+    method: :get, url: calendar_events_path, local: true do |f|
+    .p-2
+      = f.date_select :date, discard_day: true, use_short_month: true,
+        hide_label: true, selected: params[:start_date]
+    .p-2
+      = f.primary 'Go'
 
 %p Click event name to view details.
 

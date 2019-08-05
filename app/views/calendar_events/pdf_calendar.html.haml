@@ -16,12 +16,14 @@
             %tr
               %th{scope: 'row'} Type
               %td= e.type + (e.all_day && e.type == 'Event' ? ' (All Day)' : '')
-            %tr
-              %th{scope: 'row'} All Day Event
-              %td= e.all_day ? 'Yes' : 'No'
-            %tr
-              %th{scope: 'row'} Time of Event
-              %td= "#{e.start_time_display} to #{e.end_time_display}"
+            - if e.type == 'Event' && !e.all_day
+              %tr
+                %th{scope: 'row'} Time of Event
+                %td= "#{e.start_time_display} to #{e.end_time_display}"
+            - else
+              %tr
+                %th{scope: 'row'} Date of Event
+                %td= "#{e.start_time_display}"
             - if e.type == 'Event'
               %tr
                 %th{scope: 'row'} Point Members
