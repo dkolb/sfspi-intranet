@@ -11,7 +11,11 @@ class User < ApplicationRecord
 			user.last_name = auth.info.last_name
 			user.email = auth.info.email
 			user.picture = auth.info.image
-      user.display_name = auth.extra.raw_info.displayName 
+      if auth.provider == 'google_oauth2'
+        user.display_name = auth.info.name
+      else
+        user.display_name = auth.extra.raw_info.displayName 
+      end
       user.job_title = auth.extra.raw_info.jobTitle 
 			user.save!
 		end
@@ -24,7 +28,11 @@ class User < ApplicationRecord
     self.last_name = auth.info.last_name
     self.email = auth.info.email
     self.picture = auth.info.image
-    self.display_name = auth.extra.raw_info.displayName 
+    if auth.provider == 'google_oauth2'
+      self.display_name = auth.info.name
+    else
+      self.display_name = auth.extra.raw_info.displayName 
+    end
     self.job_title = auth.extra.raw_info.jobTitle 
     save!
   end

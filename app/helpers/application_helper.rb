@@ -37,7 +37,7 @@ module ApplicationHelper
   end
 
   def user_dropdown_links
-    links = [ { name: 'Logout', path: logout_path } ]
+    links = [ { name: 'Logout', path: logout_path, disable_turbo: true } ]
     if current_user.record_link
       links << {
         name: 'Profile',

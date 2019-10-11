@@ -10,4 +10,6 @@ Rails.application.config.middleware.use OmniAuth::Builder do
         token_url: "#{tenant}/oauth2/v2.0/token"
       }
     }
+  provider :google_oauth2, ENV['GOOGLE_OAUTH_CLIENT'],
+    ENV['GOOGLE_OAUTH_SECRET']
 end

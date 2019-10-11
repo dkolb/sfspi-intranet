@@ -5,6 +5,7 @@ ruby '2.6.3'
 
 # My gems
 gem 'omniauth-microsoft_v2_auth'
+gem 'omniauth-google-oauth2'
 gem 'activerecord-session_store'
 gem 'active_link_to'
 gem 'airrecord'
