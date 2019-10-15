@@ -50,12 +50,14 @@
         - else
           .navbar-nav.mr-auto
           .navbar-nav
-            %a.btn.btn-primary.mx-1{:href => "/auth/google_oauth2",
-              :role => "button"}
-              Login with Google
-            %a.btn.btn-primary.mx-2{:href => "/auth/microsoft_v2_auth", 
-              :role => "button"}
-              Login with Office365
+            - if ENV['ENABLE_GOOGLE_OAUTH'] == 'true'
+              %a.btn.btn-primary.mx-1{:href => "/auth/google_oauth2",
+                :role => "button"}
+                Login with Google
+            - if ENV['ENABLE_O365_OAUTH'] == 'true'
+              %a.btn.btn-primary.mx-2{:href => "/auth/microsoft_v2_auth", 
+                :role => "button"}
+                Login with Office365
     - flash.each do |key, value|
       %div{:class => "container #{flash_class(key)}"}
         - if value.is_a? Array
