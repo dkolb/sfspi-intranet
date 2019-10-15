@@ -1,0 +1,16 @@
+- title 'Generate Attendance Report'
+%h1 Active Member Attendance Summary
+%table.table.table-striped
+  %thead
+    %tr
+      %th{:scope => 'col'} Member
+      %th{:scope => 'col'} Events Attended
+      %th{:scope => 'col'} Meetings Attended
+    %tbody
+      - @counts.each do |row_data|
+        %tr
+          %td=link_to row_data[:pseudonym],
+            attendance_report_url(member_id: row_data[:id])
+          %td=row_data[:events]
+          %td=row_data[:meetings]
+          

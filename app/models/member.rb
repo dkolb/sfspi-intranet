@@ -56,6 +56,7 @@ class Member < Airrecord::Table
   map_field :zip, 'Zip'
   map_date_field :birthday, 'Birthday'
 
+
   class << self
     def yellow_pages_view
       path_map = Path.path_map

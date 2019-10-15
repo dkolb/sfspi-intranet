@@ -45,4 +45,8 @@ class Meeting < Airrecord::Table
       sort: { "Date" => "asc" }
     )
   end
+
+  def self.within_12_months
+    all(filter: "{If Last 12 Months} = 1")
+  end
 end

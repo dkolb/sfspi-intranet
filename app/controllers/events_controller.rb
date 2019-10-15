@@ -9,10 +9,14 @@ class EventsController < ApplicationController
   end
 
   def index
+    go_to_form = params.permit(go_to: {}).to_h.fetch(:go_to, nil)
     if params[:start_date]
       start_date = params[:start_date].to_date
+    elsif go_to_form
+      parse_date_parts(go_to_form, :date)
+      params[:start_date] = start_date = go_to_form[:date]
     else
-      start_date = Time.zone.today
+      params[:start_date] = start_date = Time.zone.today
     end
     @events = Event.for_month(start_date)
   end

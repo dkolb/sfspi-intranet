@@ -33,8 +33,11 @@
             - if current_user.record_link
               = nav_link_to "Calendar", calendar_events_path, :inclusive
               = nav_link_to "Point Nun Reports", events_path, :inclusive
-              = nav_link_to "Attendance Report", attendance_start_path, 
-                :inclusive
+              = dropdown_nav 'Attendance Reports', 'attendanceDropdown',
+                /^\/reports\/attendance/,
+                [ { name: 'Active Members',
+                path: attendance_summary_path },
+                { name: 'Specific Member', path: attendance_all_members_path } ]
               = nav_link_to "Meeting", meetings_path, :inclusive
               = nav_link_to "Members", members_path, :inclusive
             - if is_admin?

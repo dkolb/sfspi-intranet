@@ -57,4 +57,8 @@ class Event < Airrecord::Table
     Rails.logger.info('Trying to get dates for query with #{date}')
     self.all(filter: "{Date} = DATETIME_PARSE('#{date}')")
   end
+
+  def self.within_12_months
+    all(filter: "{If Last 12 Months} = 1")
+  end
 end

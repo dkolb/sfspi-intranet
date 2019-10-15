@@ -3,6 +3,14 @@
 .d-flex.justify-content-end
   = link_to 'Create New Point Nun Form', new_event_path,
     class: 'btn btn-primary'
+.d-flex.justify-content-end
+  = bootstrap_form_with scope: :go_to, layout: :inline,
+    method: :get, url: events_path, local: true do |f|
+    .p-2
+      = f.date_select :date, discard_day: true, use_short_month: true,
+        hide_label: true, selected: params[:start_date]
+    .p-2
+      = f.primary 'Go'
 = month_calendar events: @events, attribute: :date do |date, events|
   .date=date.day
   -events.each do |e|

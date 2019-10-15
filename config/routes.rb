@@ -23,12 +23,19 @@ Rails.application.routes.draw do
     to: 'users#bulk_update'
 
   # Reports
-  get '/reports/attendance/start', 
-    to: 'attendance_report#select_member', 
-    as: 'attendance_start'
+  get '/reports/attendance/summary',
+    to: 'attendance_report#summary',
+    as: 'attendance_summary'
+
+  get '/reports/attendance/all_members', 
+    to: 'attendance_report#all_members', 
+    as: 'attendance_all_members'
   get '/reports/attendance/generate',
     to: 'attendance_report#generate',
     as: 'attendance_generate'
+  get '/reports/attendance/:member_id',
+    to: 'attendance_report#generate',
+    as: 'attendance_report'
   post '/reports/attendance/generate_pdf',
     to: 'attendance_report#generate_pdf',
     as: 'attendance_generate_pdf'
