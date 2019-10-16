@@ -4,8 +4,5 @@
     :href => "#", :id => id, :role => "button"}= name
   .dropdown-menu{"aria-labeledby" => id}
     - links.each do |link|
-      - if link[:disable_turbo] == true
-        = link_to link[:name], link[:path], class: 'dropdown-item',
-          data: { turbolinks: false }
-      - else
-        = link_to link[:name], link[:path], class: 'dropdown-item'
+      = link_to link[:name], link[:path], class: 'dropdown-item',
+        data: { turbolinks: !link[:disable_turbo] }, target: link[:target]

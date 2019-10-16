@@ -33,13 +33,14 @@
             - if current_user.record_link
               = nav_link_to "Calendar", calendar_events_path, :inclusive
               = nav_link_to "Point Nun Reports", events_path, :inclusive
-              = dropdown_nav 'Attendance Reports', 'attendanceDropdown',
-                /^\/reports\/attendance/,
-                [ { name: 'Active Members',
-                path: attendance_summary_path },
-                { name: 'Specific Member', path: attendance_all_members_path } ]
               = nav_link_to "Meeting", meetings_path, :inclusive
               = nav_link_to "Members", members_path, :inclusive
+              = dropdown_nav 'O365', 'o365Dropdown', nil,
+                [{name: 'Outlook Email', target: '_blank',
+                path: 'https://outlook.office.com'},
+                {name: 'SharePoint', target: '_blank',
+                path: 'https://sflsisters.sharepoint.com/SitePages/Home.aspx',
+                }]
             - if is_admin?
               = dropdown_nav 'Administration', 'adminDropdown', /^\/admin/, 
                 [ { name: 'Manage User Roles and Record Links', 
