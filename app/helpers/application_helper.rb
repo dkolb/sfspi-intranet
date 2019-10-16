@@ -95,4 +95,25 @@ module ApplicationHelper
     js = Net::HTTP.get(URI(source))
     tag.script(js)
   end
+
+  def o365_link_list
+    [
+      {
+        name: 'Outlook Email',
+        target: '_blank',
+        path: 'https://outlook.office.com'
+      },
+      {
+        name: 'SharePoint',
+        target: '_blank',
+        path: 'https://sflsisters.sharepoint.com/SitePages/Home.aspx'
+    },
+    {
+      name: 'My Files',
+      target: '_blank',
+      path: 'https://sflsisters-my.sharepoint.com/_layouts/15/MySite.aspx?' \
+        'MySiteRedirect=AllDocuments'
+    }
+  ]
+  end
 end
