@@ -11,7 +11,7 @@ class EventsController < ApplicationController
   def index
     go_to_form = params.permit(go_to: {}).to_h.fetch(:go_to, nil)
     if params[:start_date]
-      start_date = params[:start_date].to_date
+      start_date = params[:start_date] = params[:start_date].to_date
     elsif go_to_form
       parse_date_parts(go_to_form, :date)
       params[:start_date] = start_date = go_to_form[:date]
@@ -25,12 +25,14 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @reporting_member = @event.reporting_member_raw.nil? ?
       Member.empty : @event.reporting_member
+    @can_edit = can_edit?
   end
 
   def edit
     @event = Event.find(params[:id])
     @reporting_member = @event.reporting_member_raw.nil? ?
       Member.empty : @event.reporting_member
+    @can_edit = can_edit?
     if is_admin? || is_secretary?
       @records = Member.all.map { |m| [m.pseudonym, m.id] }
       @selected = @records.find { |r| r[1] =~ /#{@reporting_member.id}/ }

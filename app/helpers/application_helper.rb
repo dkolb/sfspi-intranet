@@ -116,4 +116,12 @@ module ApplicationHelper
     }
   ]
   end
+
+  def attendance_link_list
+    links = [ { name: 'Active Members', path: attendance_summary_path } ]
+    if is_secretary?
+      links << { name: 'Specific Member', path: attendance_all_members_path }
+    end
+    links
+  end
 end

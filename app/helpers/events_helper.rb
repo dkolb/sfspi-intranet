@@ -14,6 +14,6 @@ module EventsHelper
   end
 
   def can_edit?
-    is_admin? || current_user.record_link == @event.reporting_member_raw
+    is_admin? || @event.reporting_member_raw.include?(current_user.record_link)
   end
 end

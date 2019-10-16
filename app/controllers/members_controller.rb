@@ -17,6 +17,7 @@ class MembersController < ApplicationController
     @member = Member.find(params[:id])
     @e_contact = emergency_contact_for(@member)
     @paths = paths
+    @can_edit = can_edit?
   end
 
   def edit

@@ -1,6 +1,6 @@
 - title 'View Member Info'
 %h1 Member Detailed Information
-- if can_edit?
+- if @can_edit
   .d-flex.justify-content-end
     = link_to 'Edit this Member', edit_member_path(@member.id)
 .w-100

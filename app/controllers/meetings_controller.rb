@@ -14,6 +14,7 @@ class MeetingsController < ApplicationController
 
   def show
     @meeting = Meeting.find(params[:id])
+    @can_edit = can_edit?
   end
 
   def edit

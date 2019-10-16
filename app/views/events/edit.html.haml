@@ -4,7 +4,7 @@
   = link_to 'Show', event_path(@event.id), 
     class: 'btn btn-primary mx-2'
   = link_to 'Back', events_path, class: 'btn btn-primary mx-2'
-- unless can_edit?
+- unless @can_edit
   .invalid-feedback.independent-feedback
     You cannot edit this event as you did not submit it!
 #same_day_events_description.d-none
@@ -12,6 +12,6 @@
   click the link to view the event.  Contact the Secretary or reporting
   member with any discrepencies.
 = render partial: 'events_form', locals: { submit_text: 'Save Changes',
-  allow_editing: can_edit?, 
+  allow_editing: @can_edit, 
   url: {controller: 'events', action: 'update', id: @event.id},
   method: :put}

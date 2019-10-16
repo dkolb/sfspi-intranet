@@ -1,5 +1,5 @@
 %h1 Meeting Information
-- if can_edit?
+- if @can_edit
   .d-flex.justify-content-end
     = link_to 'Edit this Meeting', edit_meeting_path(@meeting.id)
 .container
