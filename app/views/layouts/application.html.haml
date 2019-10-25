@@ -41,7 +41,11 @@
               = dropdown_nav 'Administration', 'adminDropdown', /^\/admin/, 
                 [ { name: 'Manage User Roles and Record Links', 
                 path: users_path } ]
-            = dropdown_nav 'O365', 'o365Dropdown', nil, o365_link_list
+            - if session[:auth_provider] == 'microsoft_v2_auth'
+              = dropdown_nav 'O365', 'o365Dropdown', nil, o365_link_list
+            - else
+              = dropdown_nav 'GSuite', 'gsuiteDropdown', nil,
+                gsuite_link_list
           .navbar-nav
             = dropdown_nav current_user.display_name, 'profileDropdown', 
               /^\/me/, user_dropdown_links

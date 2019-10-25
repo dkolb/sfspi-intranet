@@ -117,6 +117,26 @@ module ApplicationHelper
   ]
   end
 
+  def gsuite_link_list
+    [
+      {
+        name: 'GMail',
+        target: '_blank',
+        path: 'http://mail.southfloridasisters.org'
+      },
+      {
+        name: 'Calendar',
+        target: '_blank',
+        path: 'http://calendar.southfloridasisters.org'
+      },
+      {
+        name: 'Drive',
+        target: '_blank',
+        path: 'http://drive.southfloridasisters.org'
+      }
+    ]
+  end
+
   def attendance_link_list
     links = [ { name: 'Active Members', path: attendance_summary_path } ]
     if is_secretary?
