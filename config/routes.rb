@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   # Authentication Related Routes
-  get 'login', to: redirect('/auth/microsoft_v2_auth'), as: 'login'
+  get 'login', to: redirect('/auth/google_oauth2'), as: 'login'
   get 'logout', to: 'sessions#destroy'
   get '/auth/:provider/callback', to: 'sessions#create'
   get '/auth/failure', to: 'sessions#auth_failure'
